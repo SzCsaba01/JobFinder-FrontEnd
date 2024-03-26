@@ -1,0 +1,28 @@
+<div class="landing-page">
+    <section class="button-section">
+        <div class="container">
+            <div class="row">
+                <h1>Find Your Dream Job with AI-Powered Matching</h1>
+            </div>
+            <div class="row">
+                <button class="btn btn-primary" routerLink="/registration">Sign Up</button>
+                <button class="btn btn-primary" routerLink="/login">Login</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-overview">
+        <div class="feature" *ngFor="let feature of features">
+            <img alt="{{feature.title}}">
+            <h3>{{feature.title}}</h3>
+            <p>{{feature.description}}</p>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="testimonial" *ngFor="let testimonial of testimonials">
+            <blockquote>{{testimonial.quote}}</blockquote>
+            <p class="user">{{testimonial.user}}</p>
+        </div>
+    </section>
+</div>

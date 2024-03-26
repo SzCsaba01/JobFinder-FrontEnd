@@ -1,0 +1,39 @@
+.landing-page {
+  .features-overview {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    padding: 50px 10px;
+
+    .feature {
+      max-width: 200px;
+    }
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+
+    .btn {
+      max-width: 10%;
+    }
+  }
+
+  .button-section {
+    display: cover;
+    text-align: center;
+    padding: 5rem 1rem;
+  }
+  
+  .testimonials {
+    background-color: #f0f0f0;
+    padding: 50px 10px;
+    text-align: center;
+
+    .testimonial {
+      margin-bottom: 20px;
+    }
+  }
+}
+  

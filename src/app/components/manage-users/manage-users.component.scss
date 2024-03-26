@@ -1,0 +1,25 @@
+.container {
+    margin-top: 16vh;
+    width: 80%; 
+
+    .filter-container {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+  
+      .filter-field {
+        margin-right: 10px;
+        width: 15.8%; 
+      }
+    }
+}
+
+.table-container {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+  
+.clickable .mat-mdc-row:hover .mat-mdc-cell {
+  background-color: #D3D3D3;
+  cursor: pointer;
+}

@@ -1,0 +1,181 @@
+
+<div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-12 col-xl-11">
+            <div class="card text-black" style="border-radius: 25px;">
+                <div class="card-body p-md-5">
+                    <div class="row mb-4">
+                        <div class="col-auto">
+                          <button type="button" class="btn btn-icon btn-back" (click)="onBack()">
+                            <i class="bi bi-arrow-left"></i>
+                          </button>
+                        </div>
+                        <div class="col">
+                          <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                            <form class="mx-1 mx-md-4" [formGroup]="registrationForm">
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div class="input-group mb-3">
+                                    <i class="bi bi-person"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            formControlName="firstName"
+                                            [ngClass]="{'is-invalid': firstName.errors && (firstName.touched || firstName.dirty), 'is-valid': firstName.valid}"/>
+                                        <label class="form-label">First Name</label>
+                                        <div class="invalid-feedback" >
+                                            <strong *ngIf="firstName.errors?.['required']">
+                                                First Name is required
+                                            </strong>
+                                            <strong *ngIf="firstName?.errors?.['minlength']">
+                                                First Name length must be greater than {{firstName.errors?.['minlength']?.['requiredLength']}} characters
+                                            </strong>
+                                            <strong *ngIf="firstName.errors?.['maxlength']">
+                                                First Name length must be less than {{firstName.errors?.['maxlength']?.['requiredLength']}} characters
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div class="input-group mb-3">
+                                    <i class="bi bi-person-check"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            formControlName="lastName"
+                                            [ngClass]="{'is-invalid': lastName.errors && (lastName.touched || lastName.dirty), 'is-valid': lastName.valid}"/>
+                                        <label class="form-label">Last Name</label>
+                                        <div class="invalid-feedback" >
+                                            <strong *ngIf="lastName.errors?.['required']">Last Name is required</strong>
+                                            <strong *ngIf="lastName?.errors?.['minlength']">
+                                                Last Name length must be greater than {{lastName.errors?.['minlength']?.['requiredLength']}} characters
+                                            </strong>
+                                            <strong *ngIf="lastName.errors?.['maxlength']">
+                                                Last Name length must be less than {{lastName.errors?.['maxlength']?.['requiredLength']}} characters
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div class="input-group mb-3">
+                                    <i class="bi bi-person-circle"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            formControlName="username"
+                                            [ngClass]="{'is-invalid': username.errors && (username.touched || username.dirty), 'is-valid': username.valid}"/>
+                                        <label class="form-label">Username</label>
+                                        <div class="invalid-feedback" >
+                                            <strong *ngIf="username.errors?.['required']">
+                                                Username is required
+                                            </strong>
+                                            <strong *ngIf="username?.errors?.['minlength']">
+                                                Username length must be greater than {{username.errors?.['minlength']?.['requiredLength']}} characters
+                                            </strong>
+                                            <strong *ngIf="username.errors?.['maxlength']">
+                                                Username length must be less than {{username.errors?.['maxlength']?.['requiredLength']}} characters
+                                            </strong>
+                                            <strong *ngIf="username.errors?.['pattern']">
+                                                Username can contain only lower, upper cases and numbers
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div class="input-group mb-3">
+                                    <i class="bi bi-envelope"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            formControlName="email"
+                                            [ngClass]="{'is-invalid': email.errors && (email.touched || email.dirty), 'is-valid': email.valid}"/>
+                                        <label class="form-label">Email</label>
+                                        <div class="invalid-feedback" >
+                                            <strong *ngIf="email.errors?.['required']">
+                                                Email is required
+                                            </strong>
+                                            <strong *ngIf="email?.errors?.['email']">
+                                                Invalid email format
+                                            </strong>
+                                            <strong *ngIf="email.errors?.['maxlength']">
+                                                Email length must be less than {{email.errors?.['maxlength']?.['requiredLength']}} characters
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div class="input-group mb-3">
+                                    <i class="bi bi-lock"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input 
+                                            type="password" 
+                                            class="form-control" 
+                                            formControlName="password"
+                                            [ngClass]="{'is-invalid': password.errors && (password.touched || password.dirty), 'is-valid': password.valid}"/>
+                                        <label class="form-label">Password</label>
+                                        <div class="invalid-feedback" >
+                                            <strong *ngIf="password.errors?.['required']">Password is required</strong>
+                                            <strong *ngIf="password?.errors?.['minlength']">
+                                                Password length must be greater than {{password.errors?.['minlength']?.['requiredLength']}} characters
+                                            </strong>
+                                            <strong *ngIf="password.errors?.['maxlength']">
+                                                Password length must be less than {{password.errors?.['maxlength']?.['requiredLength']}} characters
+                                            </strong>
+                                            <strong *ngIf="password.errors?.['pattern']">
+                                                Password most contain atleast a number, a lower and upper-case character and a special character
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div class="input-group mb-3">
+                                    <i class="bi bi-shield-lock"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input 
+                                            type="password" 
+                                            class="form-control"
+                                            formControlName="repeatPassword"
+                                            [ngClass]="{'is-invalid': repeatPassword.errors && (repeatPassword.touched || repeatPassword.dirty), 'is-valid': repeatPassword.valid}"/>
+                                        <div class="invalid-feedback" >
+                                            <strong *ngIf="repeatPassword.errors?.['required']">Password is required</strong>
+                                            <strong *ngIf="repeatPassword?.errors?.['minlength']">
+                                                Repeat password length must be greater than {{repeatPassword.errors?.['minlength']?.['requiredLength']}} characters
+                                            </strong>
+                                            <strong *ngIf="repeatPassword.errors?.['maxlength']">
+                                                Password length must be less than {{password.errors?.['maxlength']?.['requiredLength']}} characters
+                                            </strong>
+                                            <strong *ngIf="repeatPassword.errors?.['pattern']">Password most contain atleast a number, a lower and upper-case character and a special character</strong>
+                                        </div>
+                                        <label class="form-label">Repeat your password</label>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-primary btn-lg" 
+                                        [disabled]="registrationForm.invalid" 
+                                        (click)="onRegister(registrationForm.value)">
+                                            Registration
+                                        </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

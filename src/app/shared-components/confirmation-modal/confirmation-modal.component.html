@@ -1,0 +1,22 @@
+<div [ngStyle]="{'display':'block'}" 
+    class="modal"
+    id="deleteConfirmationModal" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title mx-auto" id="deleteConfirmationModalLabel">Delete User</h3>
+        </div>
+        <div class="modal-body">
+          {{ message }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="mx-auto btn btn-secondary" (click)="onCancel()" data-dismiss="modal">Cancel</button>
+          <button type="button" class="mx-auto btn btn-danger" (click)="onConfirm()" data-dismiss="modal">Yes</button>
+        </div>
+      </div>
+    </div>
+</div>
+  
