@@ -1,0 +1,32 @@
+.container {
+	margin-top: 10%;
+	display: flex;
+	flex-direction: column;
+	height: 80%;
+}
+
+.clearfix {
+	margin-bottom: 5%;
+}
+
+.content {
+	justify-content: space-between;
+}
+
+.job-container {
+	width: 100%;
+	display: flex;
+	margin-bottom: 1%;
+}
+
+.page-link {
+	cursor: pointer;
+}
+
+.widget-title.font-weight-700 {
+    font-weight: 700;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}

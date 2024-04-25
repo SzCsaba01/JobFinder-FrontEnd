@@ -13,7 +13,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ICountryStateCity } from '../../models/location/countryStateCity.model';
 import { CountryStateCityService } from '../../services/country-state-city.service';
 import { formModulesUtil } from '../../shared-modules/form-modules.util';
-import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
     selector: 'app-manage-users',

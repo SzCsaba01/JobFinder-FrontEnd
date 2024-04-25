@@ -10,7 +10,7 @@ export class CountryStateCityService {
     return Country.getAllCountries();
   }
 
-  getCountryByIsoCode(isoCode: string){
+  getCountryByIsoCode(isoCode: string) {
     return Country.getCountryByCode(isoCode)
   }
 
@@ -20,5 +20,23 @@ export class CountryStateCityService {
 
   getCitiesByState(countryCode: string, stateCode: string) {
     return City.getCitiesOfState(countryCode, stateCode);
+  }
+
+  getStateNameByIsoCodeAndCountry (stateCode: string, countryCode: string) : string {
+    const stateName = State.getStateByCodeAndCountry(stateCode, countryCode);
+    if (stateName) {
+      return stateName.name;
+    }
+
+    return '';
+  }
+
+  getCountryNameByIsoCode (countryCode: string) : string {
+    const countryName = Country.getCountryByCode(countryCode);
+    if (countryName) {
+      return countryName.name;
+    }
+
+    return '';
   }
 }

@@ -44,14 +44,16 @@ export class UserProfileComponent extends SelfUnsubscriberBase implements OnInit
 
   ngOnInit(): void {
     this.initializeForm();
-
+    this.initializeCountryStateCity();
     this.userProfileService.getUserProfile()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((userProfile) => {
         this.userProfile = userProfile;
         this.initializeFormGroupValues(userProfile);
       });
+  }
 
+  private initializeCountryStateCity(): void {
     this.countryStateCity.country = this.countryStateCityService.getCountries();
 
     this.country.valueChanges.subscribe((country) => {

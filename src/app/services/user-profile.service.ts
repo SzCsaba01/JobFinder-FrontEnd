@@ -14,10 +14,10 @@ export class UserProfileService {
   constructor(private http: HttpClient) { }
 
   public getUserProfile() : Observable<IUserProfile> {
-    return this.http.get<IUserProfile>(`${environment.apiUrl}/${this._url}/GetUserProfile`);
+    return this.http.get<IUserProfile>(`${environment.jobFinderUrl}/${this._url}/GetUserProfile`);
   }
 
   public editUserProfile(userProfile: IUserProfile) {
-    return this.http.put(`${environment.apiUrl}/${this._url}/EditUserProfile`, userProfile);
+    return this.http.put(`${environment.jobFinderUrl}/${this._url}/EditUserProfile`, userProfile);
   }
 }
