@@ -1,0 +1,211 @@
+<div class="container form-container">
+  <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input
+        matInput
+        formControlName="title"
+        placeholder="Job Title*"
+      />
+      <mat-error *ngIf="jobTitleFormControl.hasError('required')"
+        >Job Title is required</mat-error
+      >
+      <mat-error *ngIf="jobTitleFormControl.hasError('minlength')"
+        >Job Title must have atleast
+        {{ jobTitleFormControl.errors?.['minlength']?.['requiredLength']}}</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Job Description"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="url" placeholder="Job Url*" />
+      <mat-error *ngIf="jobUrlFormControl.hasError('required')"
+        >Job Url is required</mat-error
+      >
+      <mat-error *ngIf="jobUrlFormControl.hasError('pattern')"
+        >Invalid Url
+      </mat-error>
+    </mat-form-field>
+
+    <div class="logo-upload-container">
+      <div class="logo-upload-label">
+        <label>Company Logo</label>
+        <div class="upload-icon" (click)="fileInput.click()">
+          <i class="bi bi-upload"></i>
+          <input
+            #fileInput
+            type="file"
+            (change)="onUploadImage($event)"
+            accept="image/*"
+            formControlName="companyLogo"
+            class="logo-input"
+            style="display: none"
+          />
+        </div>
+      </div>
+      <div class="upload-container">
+        <div class="uploaded-logo-container">
+          <img
+            *ngIf="companyLogoUrl"
+            [src]="companyLogoUrl"
+            alt="Uploaded Company Logo"
+            class="uploaded-logo"
+          />
+          <div
+            class="deselect-icon"
+            *ngIf="companyLogoUrl"
+            (click)="onDeselectImage()"
+          >
+            <i class="bi bi-x"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-select
+      formControlName="companyName"
+      [items]="companies"
+      bindLabel="name"
+      placeholder="Company Name*"
+      [multiple]="false"
+      [addTag]="true"
+    >
+    </ng-select>
+
+    <ng-select
+      formControlName="contractType"
+      [items]="contractTypes"
+      bindLabel="type"
+      placeholder="Contract Type*"
+      [multiple]="false"
+      [addTag]="true"
+    >
+    </ng-select>
+
+    <ng-select
+      formControlName="categories"
+      [items]="categories"
+      bindLabel="category"
+      placeholder="Categories*"
+      [multiple]="true"
+      [addTag]="true"
+    >
+    </ng-select>
+
+    <ng-select
+      formControlName="tags"
+      [items]="tags"
+      bindLabel="tag"
+      placeholder="Tags"
+      [multiple]="true"
+      [addTag]="true"
+    >
+    </ng-select>
+
+    <mat-checkbox color="primary" class="remote-checkbox" formControlName="isRemote">Is Remote</mat-checkbox>
+
+    <div *ngIf="locations.length > 0" class="added-locations">
+      <div *ngFor="let location of locations" class="added-location">
+        <div class="added-location-text">
+          {{
+            countryStateCityService.getCountryNameByIsoCode(
+              location.countryIso2Code
+            )
+          }}
+          -
+          {{
+            countryStateCityService.getStateNameByIsoCodeAndCountry(
+              location.stateCode,
+              location.countryIso2Code
+            )
+          }}
+          - {{ location.city }}
+        </div>
+        <span class="delete-icon" (click)="onDeleteLocation(location)">
+          <i class="bi bi-x"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="add-location-button">
+      <button
+        class="btn btn-primary"
+        [disabled]="!locationFormGroup.valid"
+        (click)="onAddLocation()"
+      >
+        Add Location
+      </button>
+    </div>
+
+    <form [formGroup]="locationFormGroup" (ngSubmit)="onAddLocation()">
+      <mat-form-field>
+        <mat-label>Country</mat-label>
+        <mat-select formControlName="country">
+          <mat-option *ngIf="countryFormControl.value != ''" [value]=""
+            >Clear Filter</mat-option
+          >
+          <mat-option
+            *ngFor="let country of countryStateCity.country"
+            [value]="country.isoCode"
+          >
+            {{ country.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>State</mat-label>
+        <mat-select formControlName="state">
+          <mat-option
+            *ngIf="
+              stateFormControl.value != '' &&
+              stateFormControl.value != null &&
+              stateFormControl.enabled
+            "
+            [value]=""
+            >Clear Filter</mat-option
+          >
+          <mat-option
+            *ngFor="let state of countryStateCity.state"
+            [value]="state.isoCode"
+          >
+            {{ state.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>City</mat-label>
+        <mat-select formControlName="city">
+          <mat-option
+            *ngIf="
+              cityFormControl.value != '' &&
+              cityFormControl.value != null &&
+              cityFormControl.enabled
+            "
+            [value]=""
+            >Clear Filter</mat-option
+          >
+          <mat-option
+            *ngFor="let city of countryStateCity.city"
+            [value]="city.name"
+          >
+            {{ city.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+    <div class="submit-button">
+      <button class="btn btn-primary" [disabled]="!jobForm.valid" type="submit">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

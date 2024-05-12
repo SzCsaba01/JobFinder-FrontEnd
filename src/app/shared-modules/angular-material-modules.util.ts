@@ -4,6 +4,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatRadioModule } from '@angular/material/radio';
+
 
 export function angularMaterialModulesUtil(){
     return [
@@ -12,6 +17,10 @@ export function angularMaterialModulesUtil(){
         MatSelectModule,
         MatPaginatorModule,
         MatTableModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatAutocompleteModule,
+        MatIconModule,
+        MatCardModule,
+        MatRadioModule
     ]
 }

@@ -1,13 +1,26 @@
 <div class="card" *ngIf="job">
+    <div class="buttons-container">
+        <button type="button" class="bookmark-btn" (click)="onSave()" [ngClass]="{'bookmarked': job.isSaved}">
+            <i class="bi bi-bookmark" *ngIf="!job.isSaved"></i>
+            <i class="bi bi-bookmark-fill" *ngIf="job.isSaved"></i>
+        </button>
+        
+        <button *ngIf="userRole == userRoles.admin" type="button" class="trash-btn" (click)="onDelete()">
+            <i class="bi bi-trash"></i>
+        </button>
+    </div>
     <div class="card-body">
         <div class="job">
             <div class="job-post-company" *ngIf="job.companyLogo">
                 <span>
                     <img [src]="job.companyLogo" alt="company-logo" class="company-logo">
                 </span>
+                <span class="company-name">
+                    {{ job.companyName }}
+                </span>
             </div>
             <div class="job-post-info">
-                <div class="job-title">
+                <div class="job-title" (click)="onSelectJob()">
                     <h2>{{ job.title }}</h2>
                 </div>
                 <ul>

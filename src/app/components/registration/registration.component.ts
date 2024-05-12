@@ -8,11 +8,12 @@ import { UserRegistration } from '../../models/user/userRegistration.model';
 import { takeUntil } from 'rxjs';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { angularMaterialModulesUtil } from '../../shared-modules/angular-material-modules.util';
 
 @Component({
   selector: 'app-registration',
   standalone: true,
-  imports: [CommonModule, RouterModule, formModulesUtil()],
+  imports: [CommonModule, RouterModule, formModulesUtil(), angularMaterialModulesUtil()],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss'
 })

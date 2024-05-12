@@ -6,23 +6,28 @@ import { takeUntil } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { formModulesUtil } from '../../shared-modules/form-modules.util';
 import { CommonModule } from '@angular/common';
+import { angularMaterialModulesUtil } from '../../shared-modules/angular-material-modules.util';
 
 @Component({
   selector: 'app-send-reset-password-email',
   standalone: true,
-  imports: [CommonModule, RouterModule, formModulesUtil()],
+  imports: [
+    CommonModule,
+    RouterModule,
+    formModulesUtil(),
+    angularMaterialModulesUtil(),
+  ],
   templateUrl: './send-reset-password-email.component.html',
-  styleUrl: './send-reset-password-email.component.scss'
+  styleUrl: './send-reset-password-email.component.scss',
 })
-export class SendResetPasswordEmailComponent extends SelfUnsubscriberBase implements OnInit{
-
+export class SendResetPasswordEmailComponent
+  extends SelfUnsubscriberBase
+  implements OnInit
+{
   emailFormGroup: FormGroup = {} as FormGroup;
   email = {} as FormControl;
 
-  constructor(
-    private userService: UserService,
-    private router: Router
-  ) {
+  constructor(private userService: UserService, private router: Router) {
     super();
   }
 
@@ -31,14 +36,15 @@ export class SendResetPasswordEmailComponent extends SelfUnsubscriberBase implem
   }
 
   private initializeForm(): void {
-    this.email = new FormControl('', [Validators.email]);
+    this.email = new FormControl('', [Validators.required, Validators.email]);
     this.emailFormGroup = new FormGroup({
-      email: this.email
+      email: this.email,
     });
   }
 
   sendResetPasswordEmail(email: string): void {
-    this.userService.sendResetPasswordEmail(email)
+    this.userService
+      .sendResetPasswordEmail(email)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
         this.router.navigate(['/login']);

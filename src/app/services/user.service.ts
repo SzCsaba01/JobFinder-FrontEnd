@@ -7,45 +7,63 @@ import { UserChangePassword } from '../models/user/userChangePassword.model';
 import { IFilteredUserSearch } from '../models/user/filteredUsersSearch.model';
 import { IFilteredUsersPagination } from '../models/user/filteredUsersPagination.model';
 
-const options = {
-  responseType: 'text' as 'json',
-};
-
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-
   private _url = 'User';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  public verifyIfResetPasswordTokenExists(resetPasswordToken: string) :  Observable<boolean>{
-    return this.http.get<boolean>(`${environment.jobFinderUrl}/${this._url}/VerifyIfResetPasswordTokenExists?resetPasswordToken=${resetPasswordToken}`);
+  public verifyIfResetPasswordTokenExists(
+    resetPasswordToken: string
+  ): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${environment.jobFinderUrl}/${this._url}/VerifyIfResetPasswordTokenExists?resetPasswordToken=${resetPasswordToken}`
+    );
   }
 
-  public getFilteredUsersPaginated(filteredUsersSearch: IFilteredUserSearch) : Observable<IFilteredUsersPagination> {
-    return this.http.put<IFilteredUsersPagination>(`${environment.jobFinderUrl}/${this._url}/GetFilteredUsersPaginated`, filteredUsersSearch);
+  public getFilteredUsersPaginated(
+    filteredUsersSearch: IFilteredUserSearch
+  ): Observable<IFilteredUsersPagination> {
+    return this.http.put<IFilteredUsersPagination>(
+      `${environment.jobFinderUrl}/${this._url}/GetFilteredUsersPaginated`,
+      filteredUsersSearch
+    );
   }
 
   public changePassword(userChangePassword: UserChangePassword) {
-    return this.http.put(`${environment.jobFinderUrl}/${this._url}/ChangePassword`, userChangePassword);
+    return this.http.put(
+      `${environment.jobFinderUrl}/${this._url}/ChangePassword`,
+      userChangePassword
+    );
   }
 
   public sendResetPasswordEmail(email: string) {
-    return this.http.put(`${environment.jobFinderUrl}/${this._url}/SendResetPasswordEmail?email=${email}`, {});
+    return this.http.put(
+      `${environment.jobFinderUrl}/${this._url}/SendResetPasswordEmail?email=${email}`,
+      {}
+    );
   }
 
   public verifyEmailByRegistrationToken(registrationToken: string) {
     const encodedToken = encodeURIComponent(registrationToken);
-    return this.http.put(`${environment.jobFinderUrl}/${this._url}/VerifyEmailByRegistrationToken?registrationToken=${encodedToken}`, {});
+    return this.http.put(
+      `${environment.jobFinderUrl}/${this._url}/VerifyEmailByRegistrationToken?registrationToken=${encodedToken}`,
+      {}
+    );
   }
 
   public register(user: UserRegistration) {
-    return this.http.post(`${environment.jobFinderUrl}/${this._url}/Register`, user);
+    return this.http.post(
+      `${environment.jobFinderUrl}/${this._url}/Register`,
+      user
+    );
   }
 
   public deleteUser(username: string) {
-    return this.http.delete(`${environment.jobFinderUrl}/${this._url}/DeleteUser?username=${username}`);
+    return this.http.delete(
+      `${environment.jobFinderUrl}/${this._url}/DeleteUser?username=${username}`
+    );
   }
 }

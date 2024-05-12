@@ -24,6 +24,7 @@ export class ErrorMessageComponent implements OnInit{
         this.message = message; 
         this.type = type;
         this.isVisible = true; 
+        setTimeout(() => this.closeMessage(), 5000);
       }
     });
   }

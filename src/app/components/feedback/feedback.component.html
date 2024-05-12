@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="company-info" *ngIf="feedback.company">
+    <h2 class="job-title">{{ feedback.jobTitle }}</h2>
+    <div class="company-info">
+      <div class="company-logo-wrapper" *ngIf="feedback.company.logo">
+        <img [src]="feedback.company.logo" alt="Company Logo" />
+      </div>
+      <div class="company-details">
+        <span class="company-name">{{ feedback.company.name }}</span>
+        <span class="company-info">
+          <i class="bi bi-star-fill text-warning"></i>
+          {{ feedback.company.rating.toFixed(1) }} ({{
+            feedback.company.numberOfRatings
+          }})
+        </span>
+      </div>
+    </div>
+  </div>
+  <form
+    [formGroup]="feedbackFormGroup"
+    (ngSubmit)="submitFeedback()"
+    class="feedback-form"
+  >
+    <mat-form-field class="feedback-field" appearance="fill">
+      <mat-label>Feedback</mat-label>
+      <textarea matInput formControlName="feedback"></textarea>
+      <mat-error
+        *ngIf="feedbackFormControl.invalid && feedbackFormControl.touched"
+      >
+        Feedback is required.
+      </mat-error>
+    </mat-form-field>
+
+    <div class="status-field">
+        <mat-label class="label">Application Status</mat-label>
+        <mat-radio-group formControlName="applicationStatus" class="status-group-container">
+          <mat-radio-button *ngFor="let status of applicationStatuses" [value]="status.value">
+            {{ status.label }}
+          </mat-radio-button>
+        </mat-radio-group>
+      
+        <mat-error *ngIf="applicationStatusFormControl.invalid && applicationStatusFormControl.touched">
+          Please select the application status.
+        </mat-error>
+      </div>
+      
+
+    <div class="rating-field">
+      <mat-label class="label">Company Rating</mat-label>
+      <div class="star-rating">
+        <mat-icon
+          *ngFor="let star of stars; let i = index"
+          (mouseenter)="hoveredRating = i + 1"
+          (mouseleave)="hoveredRating = 0"
+          (click)="setRating(i + 1)"
+          [style.color]="
+            hoveredRating > 0
+              ? i < hoveredRating
+                ? 'gold'
+                : 'gray'
+              : i < selectedRating
+              ? 'gold'
+              : 'gray'
+          "
+        >
+          star
+        </mat-icon>
+      </div>
+      <mat-error
+        *ngIf="
+          companyRatingFormControl.invalid && companyRatingFormControl.touched
+        "
+      >
+        Please provide a rating.
+      </mat-error>
+    </div>
+
+    <button
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="feedbackFormGroup.invalid"
+    >
+      Submit
+    </button>
+  </form>
+</div>

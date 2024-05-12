@@ -1,4 +1,5 @@
+@import '../node_modules/@ng-select/ng-select/scss/material.theme.scss';
 @import 'bootstrap';
 @import 'bootstrap-icons';
-html, body { height: 100%; }
+html, body { height: 100%; overflow-y: hidden; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

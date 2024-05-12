@@ -1,0 +1,117 @@
+.job-details-container {
+  margin-top: 5%;
+  font-family: Arial, sans-serif;
+
+  .job-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .bi-arrow-left {
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-bottom: 2%;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .bi-arrow-left:hover {
+    color: #007bff;
+  }
+
+  .bi {
+    margin-right: 0.313rem;
+  }
+
+  .bookmark-btn:hover {
+    color: red;
+  }
+
+  .bookmarked {
+    color: red;
+  }
+
+  .bookmark-btn {
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .trash-btn {
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .trash-btn:hover {
+    color: #007bff;
+  }
+
+  .company-logo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+
+  .date-posted {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-bottom: 10%;
+  }
+
+  .company-details {
+    float: left;
+    width: 10%;
+    margin-right: 5%;
+    text-align: center;
+  }
+
+  .job-info {
+    float: left;
+    width: 50%;
+  }
+
+  .summary-container {
+    float: right;
+    width: 30%;
+    margin-left: 5%;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 1rem;
+  }
+
+  .summary-item {
+    margin-bottom: 1rem;
+  }
+
+  .company-name {
+    display: block;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .job-categories,
+  .job-tags {
+    margin-top: 1.25rem;
+  }
+
+  .badge {
+    margin-right: 0.625rem;
+    margin-bottom: 0.625rem;
+    padding: 0.3125rem 0.625rem;
+    border-radius: 0.3125rem;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 0.875rem;
+    display: inline-block;
+  }
+}

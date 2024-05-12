@@ -13,6 +13,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ICountryStateCity } from '../../models/location/countryStateCity.model';
 import { CountryStateCityService } from '../../services/country-state-city.service';
 import { formModulesUtil } from '../../shared-modules/form-modules.util';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
     selector: 'app-manage-users',
@@ -45,12 +46,14 @@ export class ManageUsersComponent extends SelfUnsubscriberBase implements OnInit
 
   constructor(
     private userService: UserService,
-    private countryStateCityService: CountryStateCityService
+    private countryStateCityService: CountryStateCityService,
+    private loadingService: LoadingService
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.loadingService.show();
     this.filteredUserSearch.page = 0;
     this.filteredUserSearch.pageSize = 5;
     this.initializeForm();
@@ -103,10 +106,12 @@ export class ManageUsersComponent extends SelfUnsubscriberBase implements OnInit
       .subscribe((result: IFilteredUsersPagination) => {
         this.numberOfUsers = result.numberOfUsers;
         this.dataSource.data = result.users;
+        this.loadingService.hide();
       });
   }
 
   applyFilters(): void {
+    this.loadingService.show();
     const filters = this.filtersFormGroup.value as IFilteredUserSearch;
     this.filteredUserSearch = filters;
     this.filteredUserSearch.page = 0;

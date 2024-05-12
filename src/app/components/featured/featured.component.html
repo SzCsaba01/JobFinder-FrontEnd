@@ -1,0 +1,90 @@
+<div class="initial-container">
+  <div class="featured-container">
+    <div class="featured-section">
+      <h2 class="section-title">Most Saved Companies</h2>
+      <div class="row">
+        <div class="col-12 col-md-2" *ngFor="let company of topSavedCompanies">
+          <mat-card class="company-card" (click)="onCompanyClick(company)">
+            <div class="company-logo-wrapper">
+              <div class="company-logo" *ngIf="company.logo != null">
+                <img [src]="company.logo" alt="{{ company.name }} Logo" />
+              </div>
+            </div>
+            <div class="card-body">
+              <span class="company-name">{{ company.name }}</span>
+              <span class="company-info">
+                <i class="bi bi-star-fill text-warning"></i>
+                {{ company.rating.toFixed(1) }} ({{ company.numberOfRatings }})
+              </span>
+              <span class="company-info badge">
+                {{ company.count }} {{ company.count > 1 ? "Saves" : "Save" }}
+              </span>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <div class="featured-section">
+      <h2 class="section-title">Most Applied Companies</h2>
+      <div class="row">
+        <div
+          class="col-12 col-md-2"
+          *ngFor="let company of topAppliedCompanies"
+        >
+          <mat-card class="company-card" (click)="onCompanyClick(company)">
+            <div class="company-logo-wrapper">
+              <div class="company-logo" *ngIf="company.logo != null">
+                <img [src]="company.logo" alt="{{ company.name }} Logo" />
+              </div>
+            </div>
+            <div class="card-body">
+              <span class="company-name">{{ company.name }}</span>
+              <span class="company-info">
+                <i class="bi bi-star-fill text-warning"></i>
+                {{ company.rating.toFixed(1) }} ({{ company.numberOfRatings }})
+              </span>
+              <span class="company-info badge">
+                {{ company.count }} Applied
+              </span>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <div class="featured-section">
+      <h2 class="section-title">Most Saved Categories</h2>
+      <div class="row">
+        <div
+          class="col-12 col-md-2"
+          *ngFor="let category of topSavedCategories"
+        >
+          <mat-card class="category-card" (click)="onCategoryClick(category)">
+            <div class="card-body">
+              <span class="category-name">{{ category.name }}</span>
+              <span class="badge"
+                >{{ category.count }}
+                {{ category.count > 1 ? "Saves" : "Save" }}</span
+              >
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <div class="featured-section">
+      <h2 class="section-title">Most Applied Categories</h2>
+      <div class="row">
+        <div
+          class="col-12 col-md-2"
+          *ngFor="let category of topAppliedCategories"
+        >
+          <mat-card class="category-card" (click)="onCategoryClick(category)">
+            <div class="card-body">
+              <span class="category-name">{{ category.name }}</span>
+              <span class="badge">{{ category.count }} Applied</span>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

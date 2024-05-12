@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { City, Country, State } from 'country-state-city';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CountryStateCityService {
-
   getCountries() {
     return Country.getAllCountries();
   }
 
   getCountryByIsoCode(isoCode: string) {
-    return Country.getCountryByCode(isoCode)
+    return Country.getCountryByCode(isoCode);
   }
 
   getStatesByCountry(country: string) {
@@ -22,7 +21,10 @@ export class CountryStateCityService {
     return City.getCitiesOfState(countryCode, stateCode);
   }
 
-  getStateNameByIsoCodeAndCountry (stateCode: string, countryCode: string) : string {
+  getStateNameByIsoCodeAndCountry(
+    stateCode: string,
+    countryCode: string
+  ): string {
     const stateName = State.getStateByCodeAndCountry(stateCode, countryCode);
     if (stateName) {
       return stateName.name;
@@ -31,7 +33,7 @@ export class CountryStateCityService {
     return '';
   }
 
-  getCountryNameByIsoCode (countryCode: string) : string {
+  getCountryNameByIsoCode(countryCode: string): string {
     const countryName = Country.getCountryByCode(countryCode);
     if (countryName) {
       return countryName.name;

@@ -13,20 +13,27 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { ManageUsersComponent } from './components/manage-users/manage-users.component';
 import { RoleGuard } from './helpers/role.guard';
 import { LandingPageLayoutComponent } from './layouts/landing-page-layout/landing-page-layout.component';
+import { AddJobComponent } from './components/add-job/add-job.component';
+import { JobApplicationsComponent } from './components/job-applications/job-applications.component';
+import { SavedJobsComponent } from './components/saved-jobs/saved-jobs.component';
+import { FeaturedComponent } from './components/featured/featured.component';
+import { FeedbackComponent } from './components/feedback/feedback.component';
+import { UserFeedbacksComponent } from './components/user-feedbacks/user-feedbacks.component';
 
 export const routes: Routes = [
     {
         path: 'home',
         component: HomeLayoutComponent,
-        canActivate: [AuthGuard],
         children: [
             {
                 path: '',
-                component: HomeComponent
+                component: HomeComponent,
+                canActivate: [AuthGuard],
             },
             {
                 path: 'profile',
-                component: UserProfileComponent
+                component: UserProfileComponent,
+                canActivate: [AuthGuard],
             },
             {
                 path: 'manage-users',
@@ -35,6 +42,41 @@ export const routes: Routes = [
                 data: {
                     expectedRoles: 'Admin'
                 }
+            },
+            {
+                path: 'add-job',
+                component: AddJobComponent,
+                canActivate: [RoleGuard],
+                data: {
+                    expectedRoles: 'Admin'
+                }
+            },
+            {
+                path: 'saved-jobs',
+                component: SavedJobsComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'job-applications',
+                component: JobApplicationsComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'featured',
+                component: FeaturedComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'user-feedbacks',
+                component: UserFeedbacksComponent,
+                canActivate: [RoleGuard],
+                data: {
+                    expectedRoles: 'Admin'
+                }
+            },
+            {
+                path: 'feedback/:token',
+                component: FeedbackComponent
             }
         ]
     },

@@ -9,8 +9,23 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/home">Jobs</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home/featured">Featured</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home/saved-jobs">Saved Jobs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home/job-applications">Job Applications</a>
+        </li>
+        <li class="nav-item" *ngIf="userRole == userRoles.admin">
+          <a class="nav-link" routerLink="/home/add-job">Add Job</a>
+        </li>
         <li class="nav-item" *ngIf="userRole == userRoles.admin">
           <a class="nav-link" routerLink="/home/manage-users">Manage Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home/user-feedbacks">User Feedbacks</a>
         </li>
       </ul>
     </div>
