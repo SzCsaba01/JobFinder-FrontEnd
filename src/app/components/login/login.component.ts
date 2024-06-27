@@ -13,6 +13,7 @@ import { takeUntil } from 'rxjs';
 import { AuthenticationRequest } from '../../models/authentication/authenticationRequest.model';
 import { CommonModule } from '@angular/common';
 import { angularMaterialModulesUtil } from '../../shared-modules/angular-material-modules.util';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +35,8 @@ export class LoginComponent extends SelfUnsubscriberBase implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private loadingService: LoadingService,
   ) {
     super();
   }
@@ -54,10 +56,12 @@ export class LoginComponent extends SelfUnsubscriberBase implements OnInit {
   }
 
   onLogin(authenticationRequest: AuthenticationRequest): void {
+    this.loadingService.show();
     this.authenticationService
       .login(authenticationRequest)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((response) => {
+        this.loadingService.hide();
         if (response) {
           this.router.navigate(['/home']);
         }

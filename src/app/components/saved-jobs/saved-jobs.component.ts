@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SelfUnsubscriberBase } from '../../utils/SelfUnsubscriberBase';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Guid } from 'guid-typescript';
@@ -32,6 +32,9 @@ import { JobService } from '../../services/job.service';
   styleUrl: './saved-jobs.component.scss',
 })
 export class SavedJobsComponent extends SelfUnsubscriberBase implements OnInit {
+  @ViewChild('scrollable') private scrollBarContainer = {} as ElementRef;
+  private previousScroll = 0;
+
   jobs: IJobFilterResult = {} as IJobFilterResult;
   locations: ILocation[] = [];
   locationInput: string = '';
@@ -162,7 +165,6 @@ export class SavedJobsComponent extends SelfUnsubscriberBase implements OnInit {
       return;
     }
 
-    this.loadingService.show();
     const filter = jobFilter;
 
     if (filter.title.length < 3) {
@@ -196,7 +198,6 @@ export class SavedJobsComponent extends SelfUnsubscriberBase implements OnInit {
         this.pageFormControl.setValue(0);
         this.calculateTotalPages();
         this.calculateVisiblePages();
-        this.loadingService.hide();
       });
   }
 
@@ -214,6 +215,7 @@ export class SavedJobsComponent extends SelfUnsubscriberBase implements OnInit {
           this.jobs.jobs.forEach((job) => {
             job.isSaved = this.savedJobIds.includes(job.id);
           });
+          this.resetScroll();
           this.loadingService.hide();
         });
     }
@@ -263,12 +265,26 @@ export class SavedJobsComponent extends SelfUnsubscriberBase implements OnInit {
   }
 
   onSelectJob(job: IJob): void {
+    this.previousScroll = this.scrollBarContainer.nativeElement.scrollTop;
     this.selectedJob = job;
-    this.isJobDetailsShowing = true;
+    if (this.selectedJob.description == null) {
+      this.jobService
+        .getJobDescription(job.id)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((description) => {
+          this.selectedJob.description = description;
+          this.isJobDetailsShowing = true;
+          this.resetScroll();
+        });
+    } else {
+      this.isJobDetailsShowing = true;
+      this.resetScroll();
+    }
   }
 
   onBack(): void {
     this.isJobDetailsShowing = false;
+    this.scrollBarContainer.nativeElement.scrollTop = this.previousScroll;
   }
 
   onSave(job: IJob): void {
@@ -294,5 +310,9 @@ export class SavedJobsComponent extends SelfUnsubscriberBase implements OnInit {
       .subscribe(() => {
         this.initializeJobs();
       });
+  }
+
+  private resetScroll() {
+    this.scrollBarContainer.nativeElement.scrollTop = 0;
   }
 }

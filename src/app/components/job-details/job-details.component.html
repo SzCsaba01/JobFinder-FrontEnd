@@ -1,10 +1,24 @@
 <div class="container job-details-container">
+  <div class="inactive-job-warning" *ngIf="!job.isActive">
+    <div class="alert alert-warning" role="alert">
+      This job may be inactive! Please contact the company for more information.
+    </div>
+  </div>
   <div class="back-button">
     <i class="bi bi-arrow-left" (click)="onBackClick()"></i>
   </div>
   <div class="company-details">
-    <img *ngIf="job.companyLogo" [src]="job.companyLogo" alt="Company Logo" class="company-logo">
-    <p class="company-name">{{ job.companyName }}</p>
+    <img
+      *ngIf="job.company.logo"
+      [src]="job.company.logo"
+      alt="Company Logo"
+      class="company-logo"
+    />
+    <p class="company-name">{{ job.company.name }}</p>
+    <span class="company-info">
+      <i class="bi bi-star-fill text-warning"></i>
+      {{ job.company.rating.toFixed(1) }} ({{ job.company.numberOfRatings }})
+    </span>
   </div>
   <div class="job-info">
     <h1 class="job-title">{{ job.title }}</h1>
@@ -16,19 +30,38 @@
       <i class="bi bi-geo-alt-fill"></i>
       <span *ngIf="job.locations.length == 0">Worldwide</span>
       <div class="job-locations" *ngIf="job.locations.length > 0">
-          <div class="job-location" *ngFor="let location of job.locations">
-              <span *ngIf="location.city">{{ location.city }}</span>
-              <span class="seperator" *ngIf="location.city && location.stateCode">, </span>
-              <span *ngIf="location.stateCode">{{ countryStateCityService.getStateNameByIsoCodeAndCountry(location.stateCode, location.countryIso2Code) }}</span>
-              <span class="seperator" *ngIf="location.stateCode && location.countryIso2Code">, </span>
-              <span *ngIf="location.countryIso2Code">{{ countryStateCityService.getCountryNameByIsoCode(location.countryIso2Code) }}</span>
-              <span class="seperator" *ngIf="location.countryIso2Code && location.region">, </span>
-              <span *ngIf="location.region">{{ location.region }}; </span>
-          </div>
+        <div class="job-location" *ngFor="let location of job.locations">
+          <span *ngIf="location.city">{{ location.city }}</span>
+          <span class="seperator" *ngIf="location.city && location.stateCode"
+            >,
+          </span>
+          <span *ngIf="location.stateCode">{{
+            countryStateCityService.getStateNameByIsoCodeAndCountry(
+              location.stateCode,
+              location.countryIso2Code
+            )
+          }}</span>
+          <span
+            class="seperator"
+            *ngIf="location.stateCode && location.countryIso2Code"
+            >,
+          </span>
+          <span *ngIf="location.countryIso2Code">{{
+            countryStateCityService.getCountryNameByIsoCode(
+              location.countryIso2Code
+            )
+          }}</span>
+          <span
+            class="seperator"
+            *ngIf="location.countryIso2Code && location.region"
+            >,
+          </span>
+          <span *ngIf="location.region">{{ location.region }}; </span>
+        </div>
       </div>
     </div>
     <div class="summary-item">
-      <p><strong>Remote:</strong> {{ job.isRemote ? 'Yes' : 'No' }}</p>
+      <p><strong>Remote:</strong> {{ job.isRemote ? "Yes" : "No" }}</p>
     </div>
     <div class="summary-item" *ngIf="job.contractTypeName != ''">
       <i class="bi bi-clock-fill"></i>
@@ -37,24 +70,36 @@
     <div class="summary-item">
       <div class="job-categories">
         <span class="badge bg-info" *ngFor="let category of job.categories">
-            {{ category }}
+          {{ category }}
         </span>
       </div>
     </div>
     <div class="summary-item">
       <div class="job-tags">
         <span class="badge bg-secondary" *ngFor="let tag of job.tags">
-            {{ tag }}
+          {{ tag }}
         </span>
       </div>
     </div>
     <div class="summary-item buttons">
-      <button type="button" class="btn btn-success" (click)="onApply()" >Apply</button>
-      <button type="button" class="bookmark-btn" (click)="onSave()" [ngClass]="{'bookmarked': job.isSaved}">
+      <button type="button" class="btn btn-success" (click)="onApply()">
+        Apply
+      </button>
+      <button
+        type="button"
+        class="bookmark-btn"
+        (click)="onSave()"
+        [ngClass]="{ bookmarked: job.isSaved }"
+      >
         <i class="bi bi-bookmark" *ngIf="!job.isSaved"></i>
         <i class="bi bi-bookmark-fill" *ngIf="job.isSaved"></i>
       </button>
-      <button *ngIf="userRole == userRoles.admin" type="button" class="trash-btn" (click)="onDelete()" >
+      <button
+        *ngIf="userRole == userRoles.admin"
+        type="button"
+        class="trash-btn"
+        (click)="onDelete()"
+      >
         <i class="bi bi-trash"></i>
       </button>
     </div>

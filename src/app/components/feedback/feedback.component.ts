@@ -27,7 +27,7 @@ export class FeedbackComponent extends SelfUnsubscriberBase implements OnInit {
     { value: ApplicationStatus.Interviewed, label: 'Interviewed' },
     { value: ApplicationStatus.Hired, label: 'Hired' },
     { value: ApplicationStatus.Rejected, label: 'Rejected' },
-    { value: ApplicationStatus.NotInterested, label: 'Not Interested' },
+    { value: ApplicationStatus['Not Interested'], label: 'Not Interested' },
   ];
 
   feedbackFormGroup: FormGroup = {} as FormGroup;
@@ -92,6 +92,7 @@ export class FeedbackComponent extends SelfUnsubscriberBase implements OnInit {
     this.feedback.applicationStatus = this.applicationStatusFormControl.value;
     this.feedback.companyRating = this.companyRatingFormControl.value;
 
+    console.log(this.feedback);
     this.feedbackService.updateFeedback(this.feedback)
     .pipe(takeUntil(this.ngUnsubscribe))  
     .subscribe(() => {

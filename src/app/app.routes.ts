@@ -19,6 +19,7 @@ import { SavedJobsComponent } from './components/saved-jobs/saved-jobs.component
 import { FeaturedComponent } from './components/featured/featured.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { UserFeedbacksComponent } from './components/user-feedbacks/user-feedbacks.component';
+import { JobRecommendationsComponent } from './components/job-recommendations/job-recommendations.component';
 
 export const routes: Routes = [
     {
@@ -76,7 +77,13 @@ export const routes: Routes = [
             },
             {
                 path: 'feedback/:token',
-                component: FeedbackComponent
+                component: FeedbackComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'job-recommendations',
+                component: JobRecommendationsComponent,
+                canActivate: [AuthGuard],
             }
         ]
     },

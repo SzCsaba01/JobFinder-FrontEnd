@@ -41,6 +41,13 @@
   cursor: pointer;
 }
 
+.company-card:hover,
+.category-card:hover {
+  transform: translateY(-0.5rem);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 100, 250, 0.315);
+}
+
 .badge {
   border-radius: 0.3125rem;
   background-color: #0099ff98;

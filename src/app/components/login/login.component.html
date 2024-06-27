@@ -1,4 +1,6 @@
-<div class="container">
+<div class="initial-container">
+  <div class="gradient-background"></div>
+  <div class="container">
     <mat-card class="mat-card">
       <mat-card-header class="card-header">
         <button type="button" class="btn btn-icon btn-back" (click)="onBack()">
@@ -9,25 +11,39 @@
         </div>
       </mat-card-header>
       <mat-card-content class="card-content">
-        <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)" class="login-form">
+        <form
+          [formGroup]="loginForm"
+          (ngSubmit)="onLogin(loginForm.value)"
+          class="login-form"
+        >
           <mat-form-field appearance="fill" class="form-field">
             <mat-label>Username/Email</mat-label>
             <input matInput formControlName="userCredential" />
-            <mat-error *ngIf="userCredential.hasError('required')">Username/Email is required</mat-error>
+            <mat-error *ngIf="userCredential.hasError('required')"
+              >Username/Email is required</mat-error
+            >
           </mat-form-field>
-  
+
           <mat-form-field appearance="fill" class="form-field">
             <mat-label>Password</mat-label>
             <input matInput type="password" formControlName="password" />
-            <mat-error *ngIf="password.hasError('required')">Password is required</mat-error>
+            <mat-error *ngIf="password.hasError('required')"
+              >Password is required</mat-error
+            >
           </mat-form-field>
-  
-          <button class="btn btn-primary login-button" type="submit" [disabled]="loginForm.invalid">Login</button>
+
+          <button
+            class="btn btn-primary login-button"
+            type="submit"
+            [disabled]="loginForm.invalid"
+          >
+            Login
+          </button>
         </form>
         <div class="forgot-password">
-            <a routerLink="/send-reset-password-email">Forgot Password?</a>
-          </div>
+          <a routerLink="/send-reset-password-email">Forgot Password?</a>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
-  
+</div>

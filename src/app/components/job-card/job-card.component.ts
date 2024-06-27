@@ -65,12 +65,12 @@ export class JobCardComponent implements OnInit{
       );
     }
     const weeksDifference = Math.floor(daysDifference / 7);
-    if (weeksDifference < 4) {
+    const monthsDifference = Math.floor(daysDifference / 30);
+    if (weeksDifference < 4 && monthsDifference < 1) {
       return (
         weeksDifference + ' week' + (weeksDifference === 1 ? '' : 's') + ' ago'
       );
     }
-    const monthsDifference = Math.floor(daysDifference / 30);
     return (
       monthsDifference + ' month' + (monthsDifference === 1 ? '' : 's') + ' ago'
     );

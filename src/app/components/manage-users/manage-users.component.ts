@@ -8,25 +8,44 @@ import { angularMaterialModulesUtil } from '../../shared-modules/angular-materia
 import { MatTableDataSource } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { IFilteredUser } from '../../models/user/filteredUser.model';
-import { ViewUserDetailsModalComponent } from "../../shared-components/view-user-details-modal/view-user-details-modal.component";
+import { ViewUserDetailsModalComponent } from '../../shared-components/view-user-details-modal/view-user-details-modal.component';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ICountryStateCity } from '../../models/location/countryStateCity.model';
 import { CountryStateCityService } from '../../services/country-state-city.service';
 import { formModulesUtil } from '../../shared-modules/form-modules.util';
 import { LoadingService } from '../../services/loading.service';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
-    selector: 'app-manage-users',
-    standalone: true,
-    templateUrl: './manage-users.component.html',
-    styleUrl: './manage-users.component.scss',
-    imports: [CommonModule, formModulesUtil(), angularMaterialModulesUtil(), ViewUserDetailsModalComponent]
+  selector: 'app-manage-users',
+  standalone: true,
+  templateUrl: './manage-users.component.html',
+  styleUrl: './manage-users.component.scss',
+  imports: [
+    CommonModule,
+    NgSelectModule,
+    formModulesUtil(),
+    angularMaterialModulesUtil(),
+    ViewUserDetailsModalComponent,
+  ],
 })
-export class ManageUsersComponent extends SelfUnsubscriberBase implements OnInit {
+export class ManageUsersComponent
+  extends SelfUnsubscriberBase
+  implements OnInit
+{
   selectedUser = {} as IFilteredUser;
   isViewUserDetailsModalShown = false;
 
-  displayedColumns: string[] = ['username', 'education', 'experience', 'country', 'state', 'city'];
+  displayedColumns: string[] = [
+    'username',
+    'education',
+    'experience',
+    'skills',
+    'country',
+    'state',
+    'city',
+  ];
+  
   numberOfUsers = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   dataSource = new MatTableDataSource<IFilteredUser>();
@@ -65,7 +84,7 @@ export class ManageUsersComponent extends SelfUnsubscriberBase implements OnInit
     this.education = new FormControl('');
     this.experience = new FormControl('');
     this.country = new FormControl('');
-    this.state = new FormControl({ value: '', disabled: true }, );
+    this.state = new FormControl({ value: '', disabled: true });
     this.city = new FormControl({ value: '', disabled: true });
 
     this.filtersFormGroup = new FormGroup({
@@ -74,7 +93,7 @@ export class ManageUsersComponent extends SelfUnsubscriberBase implements OnInit
       experience: this.experience,
       country: this.country,
       state: this.state,
-      city: this.city
+      city: this.city,
     });
 
     this.countryStateCity.country = this.countryStateCityService.getCountries();
@@ -83,7 +102,8 @@ export class ManageUsersComponent extends SelfUnsubscriberBase implements OnInit
       this.state.reset();
       this.state.disable();
       if (country) {
-        this.countryStateCity.state = this.countryStateCityService.getStatesByCountry(country);
+        this.countryStateCity.state =
+          this.countryStateCityService.getStatesByCountry(country);
         this.countryStateCity.countryCode = country;
         this.state.enable();
       }
@@ -93,7 +113,11 @@ export class ManageUsersComponent extends SelfUnsubscriberBase implements OnInit
       this.city.reset();
       this.city.disable();
       if (state) {
-        this.countryStateCity.city = this.countryStateCityService.getCitiesByState(this.country.value, state);
+        this.countryStateCity.city =
+          this.countryStateCityService.getCitiesByState(
+            this.country.value,
+            state
+          );
         this.dataSource._updateChangeSubscription();
         this.city.enable();
       }
@@ -101,11 +125,24 @@ export class ManageUsersComponent extends SelfUnsubscriberBase implements OnInit
   }
 
   private loadData(): void {
-    this.userService.getFilteredUsersPaginated(this.filteredUserSearch)
+    this.userService
+      .getFilteredUsersPaginated(this.filteredUserSearch)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((result: IFilteredUsersPagination) => {
         this.numberOfUsers = result.numberOfUsers;
         this.dataSource.data = result.users;
+        this.dataSource.data.forEach((user) => {
+          const state = this.countryStateCityService.getStateNameByIsoCodeAndCountry(user.state, user.country);
+          if (state) {
+            user.state = state;
+          }
+          const country = this.countryStateCityService.getCountryByIsoCode(
+            user.country
+          );
+          if (country) {
+            user.country = country?.name;
+          }
+        });
         this.loadingService.hide();
       });
   }
@@ -135,7 +172,9 @@ export class ManageUsersComponent extends SelfUnsubscriberBase implements OnInit
   }
 
   onDeleteUser(user: IFilteredUser): void {
-    this.dataSource.data = this.dataSource.data.filter(u => u.username !== user.username);
+    this.dataSource.data = this.dataSource.data.filter(
+      (u) => u.username !== user.username
+    );
     this.isViewUserDetailsModalShown = false;
   }
 }

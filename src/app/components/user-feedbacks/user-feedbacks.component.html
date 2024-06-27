@@ -1,1 +1,202 @@
-<p>user-feedbacks works!</p>
+<div class="initial-container">
+  <div class="container">
+    <div class="filters-container">
+      <form [formGroup]="userFeedbackFilterFormGroup">
+        <div class="row-container">
+          <mat-form-field class="form-field">
+            <mat-label>Companies</mat-label>
+            <mat-select
+              (selectionChange)="
+                filterFeedbacks(userFeedbackFilterFormGroup.value)
+              "
+              placeholder="Select Companies"
+              [formControl]="companiesFormControl"
+              multiple
+            >
+              <mat-option
+                *ngFor="let company of userFeedbackFilterResult.companies"
+                [value]="company"
+                >{{ company }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <mat-label>Categories</mat-label>
+            <mat-select
+              (selectionChange)="
+                filterFeedbacks(userFeedbackFilterFormGroup.value)
+              "
+              placeholder="Select Categories"
+              [formControl]="categoriesFormControl"
+              multiple
+            >
+              <mat-option
+                *ngFor="let category of userFeedbackFilterResult.categories"
+                [value]="category"
+                >{{ category }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <mat-label>Contract type</mat-label>
+            <mat-select
+              (selectionChange)="
+                filterFeedbacks(userFeedbackFilterFormGroup.value)
+              "
+              placeholder="Select Contract Type"
+              [formControl]="contractTypesFormControl"
+              multiple
+            >
+              <mat-option
+                *ngFor="
+                  let contractType of userFeedbackFilterResult.contractTypes
+                "
+                [value]="contractType"
+                >{{ contractType }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="row-container">
+          <mat-form-field class="form-field">
+            <mat-label>Job title</mat-label>
+            <mat-select
+              (selectionChange)="
+                filterFeedbacks(userFeedbackFilterFormGroup.value)
+              "
+              placeholder="Select Job Title"
+              [formControl]="jobIdFormControl"
+            >
+              <mat-option *ngIf="jobIdFormControl.value != null" [value]="null"
+                >Clear Filter</mat-option
+              >
+              <mat-option
+                *ngFor="let job of userFeedbackFilterResult.jobs"
+                [value]="job.jobId"
+                >{{ job.jobTitle }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <mat-label>Application status</mat-label>
+            <mat-select
+              (selectionChange)="
+                filterFeedbacks(userFeedbackFilterFormGroup.value)
+              "
+              placeholder="Select Application Status"
+              [formControl]="applicationStatusFormControl"
+              multiple
+            >
+              <mat-option
+                *ngFor="let applicationStatus of applicationStatuses"
+                [value]="applicationStatus.value"
+                >{{ applicationStatus.label }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <mat-label>Date range</mat-label>
+            <mat-date-range-input
+              [rangePicker]="picker"
+              [min]="minDate"
+              [max]="maxDate"
+            >
+              <input
+                matStartDate
+                (dateChange)="
+                  filterFeedbacks(userFeedbackFilterFormGroup.value)
+                "
+                [formControl]="startDateFormControl"
+                placeholder="Start date"
+              />
+              <input
+                matEndDate
+                (dateChange)="
+                  filterFeedbacks(userFeedbackFilterFormGroup.value)
+                "
+                [formControl]="endDateFormControl"
+                placeholder="End date"
+              />
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+        <div class="rating-range-container">
+          <mat-label class="label">Rating range</mat-label>
+          <mat-slider
+            class="slider"
+            [min]="1"
+            [max]="5"
+            [step]="1"
+            showTickMarks
+            discrete
+          >
+            <input
+              type="range"
+              (change)="filterFeedbacks(userFeedbackFilterFormGroup.value)"
+              [formControl]="minRatingFormControl"
+              matSliderStartThumb
+            />
+            <input
+              type="range"
+              (change)="filterFeedbacks(userFeedbackFilterFormGroup.value)"
+              [formControl]="maxRatingFormControl"
+              matSliderEndThumb
+            />
+          </mat-slider>
+        </div>
+      </form>
+    </div>
+    <div class="feedbacks-container">
+      <div class="feedbacks-title">Feedbacks</div>
+      <div class="feedbacks">
+        <div class="feedback" *ngFor="let feedback of userFeedbackFilterResult.feedbacks">
+          <div class="feedback-header">
+            <div class="company">
+              <img
+                *ngIf="feedback.company.logo"
+                class="company-logo"
+                [src]="feedback.company.logo"
+                alt="Company Logo"
+              />
+              <div class="company-name">{{ feedback.company.name }}</div>
+              <div class="company-rating">
+                <i class="bi bi-star-fill text-warning"></i>
+                {{ feedback.company.rating.toFixed(1) }} ({{ feedback.company.numberOfRatings }})
+              </div>
+            </div>
+          </div>
+          <div class="feedback-body">
+            <div class="job-title">{{ feedback.jobTitle }}</div>
+            <div class="date">{{ feedback.feedbackDate | date: 'MM/dd/yyyy'  }}</div>
+            <div class="rating">
+              <i class="bi bi-star-fill text-warning"></i>
+              {{ feedback.companyRating.toFixed(1) }}
+            </div>
+            <div class="application-status">Application Status: {{ applicationStatus[feedback.applicationStatus] }}</div>
+            <div class="contract-type">Contract Type: {{ feedback.contractType }}</div>
+            <div class="comment">{{ feedback.feedback }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="statistics-container">
+      <div class="rating-statistics">
+        <div class="rating-title">
+          Rating Statistics
+        </div>
+        <canvas id="rating-chart"></canvas>
+      </div>
+      <div class="application-status-statistics">
+        <div class="application-status-title">
+          Application Status Statistics
+        </div>
+        <canvas id="application-status-chart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>

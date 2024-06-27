@@ -16,6 +16,7 @@ import { CountryStateCityService } from '../../services/country-state-city.servi
 import { ICountryStateCity } from '../../models/location/countryStateCity.model';
 import { ILocation } from '../../models/location/location.model';
 import { urlFormat } from '../../formats/formats';
+import { ErrorHandlerService } from '../../services/error-handler.service';
 
 @Component({
   selector: 'app-add-job',
@@ -63,7 +64,8 @@ export class AddJobComponent extends SelfUnsubscriberBase implements OnInit {
     public countryStateCityService: CountryStateCityService,
     private tagService: TagService,
     private jobService: JobService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private errorHandlerService: ErrorHandlerService
   ) {
     super();
   }
@@ -182,7 +184,7 @@ export class AddJobComponent extends SelfUnsubscriberBase implements OnInit {
     const file = event.target.files[0];
 
     if (file.type.split('/')[0] !== 'image') {
-      alert('Only images are allowed');
+      this.errorHandlerService.showMessage('Only image files are allowed!', 'error');
       return;
     }
 

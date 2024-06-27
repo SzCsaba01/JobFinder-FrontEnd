@@ -5,16 +5,14 @@ import { map } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthenticationRequest } from '../models/authentication/authenticationRequest.model';
 
-const options = {
-  responseType: 'text' as 'json',
-};
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
   private _url = 'Authentication';
+  private options = {
+    responseType: 'text' as 'json',
+  };
 
   constructor(
     private http: HttpClient,
@@ -23,7 +21,7 @@ export class AuthenticationService {
 
   public login(userAuthentication: AuthenticationRequest){
     return this.http
-      .post<string>(`${environment.jobFinderUrl}/${this._url}/Login`, userAuthentication, options)
+      .post<string>(`${environment.jobFinderUrl}/${this._url}/Login`, userAuthentication, this.options)
       .pipe(
         map((role : string) => {
           localStorage.setItem('role', role);

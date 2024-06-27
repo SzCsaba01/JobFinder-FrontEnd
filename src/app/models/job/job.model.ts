@@ -1,12 +1,12 @@
 import { Guid } from 'guid-typescript';
 import { ILocation } from '../location/location.model';
+import { ICompany } from '../company/company.model';
 
 export interface IJob {
   id: Guid;
   title: string;
   description: string;
-  companyName: string;
-  companyLogo: string;
+  company: ICompany;
   url: string;
   contractTypeName: string;
   datePosted: Date;

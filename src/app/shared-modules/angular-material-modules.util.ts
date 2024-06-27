@@ -8,6 +8,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 export function angularMaterialModulesUtil(){
@@ -21,6 +24,9 @@ export function angularMaterialModulesUtil(){
         MatAutocompleteModule,
         MatIconModule,
         MatCardModule,
-        MatRadioModule
+        MatRadioModule,
+        MatDatepickerModule,
+        MatSliderModule,
+        MatProgressBarModule,
     ]
 }

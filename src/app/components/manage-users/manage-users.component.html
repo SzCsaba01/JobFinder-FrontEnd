@@ -1,78 +1,133 @@
 <div class="container">
-    <form class="filter-container" [formGroup]="filtersFormGroup" >
-        <mat-form-field class="filter-field">
-          <input matInput placeholder="Username" (keyup)="applyFilters()" formControlName="username">
-        </mat-form-field>
-        <mat-form-field class="filter-field">
-          <input matInput placeholder="Education" (keyup)="applyFilters()" formControlName="education">
-        </mat-form-field>
-        <mat-form-field class="filter-field">
-          <input matInput placeholder="Experience" (keyup)="applyFilters()" formControlName="experience">
-        </mat-form-field>
-        <mat-form-field class="filter-field">
-          <mat-label>Country</mat-label>
-          <mat-select (selectionChange)="applyFilters()" formControlName="country">
-            <mat-option *ngFor="let country of countryStateCity.country" [value]="country.isoCode">
-              {{ country.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="filter-field">
-          <mat-label>State</mat-label>
-          <mat-select (selectionChange)="applyFilters()" formControlName="state">
-            <mat-option *ngFor="let state of countryStateCity.state" [value]="state.isoCode">
-              {{ state.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="filter-field">
-          <mat-label>City</mat-label>
-          <mat-select (selectionChange)="applyFilters()" formControlName="city">
-            <mat-option *ngFor="let city of countryStateCity.city" [value]="city.name">
-              {{ city.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-    </form>
+  <form class="filter-container" [formGroup]="filtersFormGroup">
+    <mat-form-field class="filter-field">
+      <input
+        matInput
+        placeholder="Username"
+        (keyup)="applyFilters()"
+        formControlName="username"
+      />
+    </mat-form-field>
+    <mat-form-field class="filter-field">
+      <input
+        matInput
+        placeholder="Education"
+        (keyup)="applyFilters()"
+        formControlName="education"
+      />
+    </mat-form-field>
+    <mat-form-field class="filter-field">
+      <input
+        matInput
+        placeholder="Experience"
+        (keyup)="applyFilters()"
+        formControlName="experience"
+      />
+    </mat-form-field>
+    <mat-form-field class="filter-field">
+      <mat-label>Country</mat-label>
+      <mat-select (selectionChange)="applyFilters()" formControlName="country">
+        <mat-option *ngIf="country.value != ''" [value]=""
+          >Clear Filter</mat-option
+        >
+        <mat-option
+          *ngFor="let country of countryStateCity.country"
+          [value]="country.isoCode"
+        >
+          {{ country.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="filter-field">
+      <mat-label>State</mat-label>
+      <mat-select (selectionChange)="applyFilters()" formControlName="state">
+        <mat-option
+          *ngIf="state.value != '' && state.value != null && state.enabled"
+          [value]=""
+          >Clear Filter</mat-option
+        >
+        <mat-option
+          *ngFor="let state of countryStateCity.state"
+          [value]="state.isoCode"
+        >
+          {{ state.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="filter-field">
+      <mat-label>City</mat-label>
+      <mat-select (selectionChange)="applyFilters()" formControlName="city">
+        <mat-option
+          *ngIf="city.value != '' && city.value != null && city.enabled"
+          [value]=""
+          >Clear Filter</mat-option
+        >
+        <mat-option
+          *ngFor="let city of countryStateCity.city"
+          [value]="city.name"
+        >
+          {{ city.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
 
-    <div class="clickable table-container">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container matColumnDef="username">
-            <th mat-header-cell *matHeaderCellDef> Username </th>
-            <td mat-cell *matCellDef="let element"> {{element.username}} </td>
-        </ng-container>
-        <ng-container matColumnDef="education">
-            <th mat-header-cell *matHeaderCellDef> Education </th>
-            <td mat-cell *matCellDef="let element"> {{element.education ?? '-'}} </td>
-        </ng-container>
-        <ng-container matColumnDef="experience">
-            <th mat-header-cell *matHeaderCellDef> Experience </th>
-            <td mat-cell *matCellDef="let element"> {{element.experience ?? '-'}} </td>
-        </ng-container>
-        <ng-container matColumnDef="country">
-            <th mat-header-cell *matHeaderCellDef> Country </th>
-            <td mat-cell *matCellDef="let element"> {{element.country ?? '-'}} </td>
-        </ng-container>
-        <ng-container matColumnDef="state">
-            <th mat-header-cell *matHeaderCellDef> State </th>
-            <td mat-cell *matCellDef="let element"> {{element.state ?? '-'}} </td>
-        </ng-container>
-        <ng-container matColumnDef="city">
-            <th mat-header-cell *matHeaderCellDef> City </th>
-            <td mat-cell *matCellDef="let element"> {{element.city ?? '-'}} </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row (click)="onRowClicked(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-    </div>
-    <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="filteredUserSearch.pageSize" [pageIndex]="filteredUserSearch.page" [length]="numberOfUsers"
-                    (page)="onPageChange($event)">
-    </mat-paginator>
+  <div class="clickable table-container">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef>Username</th>
+        <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+      </ng-container>
+      <ng-container matColumnDef="education">
+        <th mat-header-cell *matHeaderCellDef>Education</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.education ?? "-" }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="experience">
+        <th mat-header-cell *matHeaderCellDef>Experience</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.experience ?? "-" }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="skills">
+        <th mat-header-cell *matHeaderCellDef>Skills</th>
+        <td mat-cell *matCellDef="let element">{{ element.skills ?? "-" }}</td>
+      </ng-container>
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef>Country</th>
+        <td mat-cell *matCellDef="let element">{{ element.country ?? "-" }}</td>
+      </ng-container>
+      <ng-container matColumnDef="state">
+        <th mat-header-cell *matHeaderCellDef>State</th>
+        <td mat-cell *matCellDef="let element">{{ element.state ?? "-" }}</td>
+      </ng-container>
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef>City</th>
+        <td mat-cell *matCellDef="let element">{{ element.city ?? "-" }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        (click)="onRowClicked(row)"
+        *matRowDef="let row; columns: displayedColumns"
+      ></tr>
+    </table>
+  </div>
+  <mat-paginator
+    [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="filteredUserSearch.pageSize"
+    [pageIndex]="filteredUserSearch.page"
+    [length]="numberOfUsers"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
 </div>
 
 <app-view-user-details-modal
-    *ngIf="isViewUserDetailsModalShown"
-    (closeModalEvent)="onCloseModal()"
-    (deleteUserEvent)="onDeleteUser($event)"
-    [user]="selectedUser">
+  *ngIf="isViewUserDetailsModalShown"
+  (closeModalEvent)="onCloseModal()"
+  (deleteUserEvent)="onDeleteUser($event)"
+  [user]="selectedUser"
+>
 </app-view-user-details-modal>

@@ -17,7 +17,11 @@ export class UserProfileService {
     return this.http.get<IUserProfile>(`${environment.jobFinderUrl}/${this._url}/GetUserProfile`);
   }
 
-  public editUserProfile(userProfile: IUserProfile) {
-    return this.http.put(`${environment.jobFinderUrl}/${this._url}/EditUserProfile`, userProfile);
+  public editUserProfile(userProfile: FormData, updateDataFromCV: boolean) {
+    return this.http.put(`${environment.jobFinderUrl}/${this._url}/EditUserProfile?updateDataFromCV=${updateDataFromCV}`, userProfile);
+  }
+
+  public recommendJobs() {
+    return this.http.post(`${environment.jobFinderUrl}/${this._url}/RecommendJobs`, null);
   }
 }

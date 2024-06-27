@@ -9,4 +9,5 @@ export interface IUserFeedback {
   applicationStatus: ApplicationStatus;
   token: string;
   jobTitle: string;
+  contractType: string;
 }

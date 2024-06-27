@@ -54,7 +54,7 @@ export class UserService {
     );
   }
 
-  public register(user: UserRegistration) {
+  public register(user: FormData) {
     return this.http.post(
       `${environment.jobFinderUrl}/${this._url}/Register`,
       user

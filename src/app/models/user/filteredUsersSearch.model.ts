@@ -7,5 +7,4 @@ export interface IFilteredUserSearch {
     state: string;
     city: string;
     experience: string;
-    skills: string[];
 }

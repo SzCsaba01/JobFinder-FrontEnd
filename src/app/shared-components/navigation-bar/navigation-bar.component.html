@@ -24,8 +24,11 @@
         <li class="nav-item" *ngIf="userRole == userRoles.admin">
           <a class="nav-link" routerLink="/home/manage-users">Manage Users</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="userRole == userRoles.admin">
           <a class="nav-link" routerLink="/home/user-feedbacks">User Feedbacks</a>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link" routerLink="/home/job-recommendations">Job Recommendations</a>
         </li>
       </ul>
     </div>

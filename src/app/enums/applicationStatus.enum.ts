@@ -4,5 +4,5 @@ export enum ApplicationStatus {
   Interviewed = 2,
   Hired = 3,
   Rejected = 4,
-  NotInterested = 5,
+  'Not Interested' = 5,
 }

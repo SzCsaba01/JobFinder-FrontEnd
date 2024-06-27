@@ -9,4 +9,5 @@ export interface IUserProfile {
     education: string;
     experience: string;
     skills: string[];
+    userCV?: string;
 }

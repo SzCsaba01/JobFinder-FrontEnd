@@ -1,28 +1,63 @@
 <div class="landing-page">
-    <section class="button-section">
-        <div class="container">
-            <div class="row">
-                <h1>Find Your Dream Job with AI-Powered Matching</h1>
-            </div>
-            <div class="row">
-                <button class="btn btn-primary" routerLink="/registration">Sign Up</button>
-                <button class="btn btn-primary" routerLink="/login">Login</button>
-            </div>
-        </div>
-    </section>
+  <div class="gradient-background"></div>
+  <section class="top-section">
+    <div class="container">
+      <h1>Find Your Dream Job with AI-Powered Matching</h1>
+      <div class="button-group">
+        <button class="btn btn-primary" routerLink="/registration">
+          Sign Up
+        </button>
+        <button class="btn btn-secondary" routerLink="/login">Login</button>
+      </div>
+    </div>
+  </section>
 
-    <section class="features-overview">
+  <section class="features-overview">
+    <div class="container">
+      <h4>Features</h4>
+      <div class="features">
         <div class="feature" *ngFor="let feature of features">
-            <img alt="{{feature.title}}">
-            <h3>{{feature.title}}</h3>
-            <p>{{feature.description}}</p>
+          <img [src]="feature.icon" alt="{{ feature.title }}" />
+          <h5>{{ feature.title }}</h5>
+          <p>{{ feature.description }}</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <section class="testimonials">
-        <div class="testimonial" *ngFor="let testimonial of testimonials">
-            <blockquote>{{testimonial.quote}}</blockquote>
-            <p class="user">{{testimonial.user}}</p>
+  <section class="how-it-works">
+    <div class="container">
+      <h4>How It Works</h4>
+      <div class="steps">
+        <div class="step">
+          <h5>1. Sign Up</h5>
+          <p>Create an account to get started.</p>
         </div>
-    </section>
+        <div class="step">
+          <h5>2. Upload Your CV</h5>
+          <p>Upload your CV to our platform.</p>
+        </div>
+        <div class="step">
+          <h5>3. Get Matched</h5>
+          <p>Receive personalized job recommendations.</p>
+        </div>
+        <div class="step">
+          <h5>4. Apply</h5>
+          <p>Apply to jobs that fit your profile.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="partners">
+    <div class="container">
+      <h4>Our Partners</h4>
+      <div class="partners-list">
+        <div class="partner" *ngFor="let partner of partners">
+          <img [src]="partner.logo" />
+          <span class="partner-name">{{ partner.name }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

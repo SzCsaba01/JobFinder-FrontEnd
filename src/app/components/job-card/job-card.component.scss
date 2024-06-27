@@ -1,5 +1,6 @@
 .card {
   width: 100%;
+  transition: background-color 0.3s ease;
 }
 
 .bookmarked {
@@ -20,12 +21,12 @@
     border: none;
     cursor: pointer;
     transition: color 0.3s ease;
-  
+
     &:hover {
       color: blue;
     }
   }
-  
+
   .bookmark-btn {
     position: absolute;
     top: 0;
@@ -43,77 +44,106 @@
   }
 }
 
-.job-post-company {
-  float: left;
-  margin-right: 1.25rem;
-}
-
-.job-post-company img {
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
-}
-
-.job-post-info {
-  overflow: hidden;
-}
-
-.job-title {
+.card-body {
   cursor: pointer;
-  margin-bottom: 0.625rem;
-}
 
-.job-post-info ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
+  .job {
+    margin-top: 2%;
+  }
 
-.job-post-info ul li {
-  display: inline-block;
-  margin-right: 0.625rem;
-}
+  .job-post-company {
+    float: left;
+    margin-right: 1.25rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
 
-.job-post-info ul li i {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 0.313rem;
-}
+  .job-post-company img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+  }
 
-.job-post-info ul li div,
-.job-post-info ul li span {
-  display: inline-block;
-  vertical-align: middle;
-}
+  .job-post-info {
+    overflow: hidden;
+  }
 
-.job-categories,
-.job-tags {
-  margin-top: 1.25rem;
-}
+  .job-title {
+    cursor: pointer;
+    margin-bottom: 0.625rem;
+  }
 
-.badge {
-  margin-right: 0.625rem;
-  margin-bottom: 0.625rem;
-  padding: 0.3125rem 0.625rem;
-  border-radius: 0.3125rem;
-  background-color: #007bff;
-  color: #fff;
-  font-size: 0.875rem;
-  display: inline-block;
-}
+  .job-post-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
 
-.job-location {
-  margin-right: 0.313rem;
-}
+  .job-post-info ul li {
+    display: inline-block;
+    margin-right: 0.625rem;
+  }
 
-.seperator {
-  margin-right: 0.313rem;
-}
+  .job-post-info ul li i {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.313rem;
+  }
 
-.company-name {
+  .job-post-info ul li div,
+  .job-post-info ul li span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .job-categories,
+  .job-tags {
+    margin-top: 1.25rem;
+  }
+
+  .badge {
+    margin-right: 0.625rem;
+    margin-bottom: 0.625rem;
+    padding: 0.3125rem 0.625rem;
+    border-radius: 0.3125rem;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 0.875rem;
+    display: inline-block;
+  }
+
+  .job-location {
+    margin-right: 0.313rem;
+  }
+
+  .seperator {
+    margin-right: 0.313rem;
+  }
+
+  .company-name {
     display: block;
     text-align: center;
     margin-top: 0.5rem;
     font-size: 1rem;
     font-weight: 500;
+  }
+
+  .company-info {
+    margin-top: 5%;
+    font-size: 1rem;
+  }
+}
+
+.card:has(.card-body:hover) {
+  background-color: #f0f0f0;
+}
+
+.inactive-job {
+  border: 2px solid rgba(255, 215, 0, 0.5); 
+  background-color: #fffacd; 
+}
+
+.inactive-job:has(.card-body:hover) {
+  background-color: #ffeb8b;
 }

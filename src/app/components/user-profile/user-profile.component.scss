@@ -1,22 +1,111 @@
-.bi {
-    font-size: 1.2rem;
-    margin-top: 0.2rem;
-    margin-right: 0.5rem;
-
+.initial-container {
+  display: flex;
+  flex-direction: column;
+  height: 91.5%;
+  overflow-y: scroll;
+  margin-top: 3.8%;
 }
 
-.bi-arrow-left {
-    font-size: 2rem !important;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin-top: 20%;
+  margin-bottom: 20%;
 }
 
-.btn-back {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
+.edit-profile-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.form-field {
+  width: 80%;
+}
+
+.mat-card {
+  width: 40%;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-profile-button {
+  width: 30%;
+}
+
+.header-title {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 1.5rem;
+}
+
+.card-header {
+  margin-bottom: 5%;
+}
+
+.bi-upload {
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.bi-x {
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-left: 5%;
+}
+
+.bi-x:hover,
+.bi-upload:hover {
+  color: #007bff;
+}
+
+.cv-upload-form {
+  width: 80%;
+  display: flex;
+  margin-bottom: 5%;
+
+  .file-input {
+    display: none;
   }
-  
-.btn-back:hover {
-    color: #007bff; 
+
+  .file-remove {
+    margin-left: 2%;
+    margin-top: 1%;
+  }
 }
-  
+
+.cv-download {
+  cursor: pointer;
+}
+
+.cv-download:hover {
+  color: #007bff;
+}
+
+.update-data-from-cv-checkbox {
+  display: flex;
+  width: 85%;
+}
+
+.skills-select {
+  width: 80%;
+  font-size: 1rem;
+}
+
+::ng-deep .ng-value-container {
+  padding-top: 0.5rem !important;
+}

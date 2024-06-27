@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { formModulesUtil } from '../../shared-modules/form-modules.util';
 import { SelfUnsubscriberBase } from '../../utils/SelfUnsubscriberBase';
 import { JobService } from '../../services/job.service';
@@ -35,6 +35,9 @@ export class HomeComponent
   extends SelfUnsubscriberBase
   implements OnInit, OnDestroy
 {
+  @ViewChild('scrollable') private scrollBarContainer = {} as ElementRef;
+  private previousScroll = 0;
+
   jobs: IJobFilterResult = {} as IJobFilterResult;
   locations: ILocation[] = [];
   locationInput: string = '';
@@ -42,7 +45,7 @@ export class HomeComponent
 
   private savedJobIds: Guid[] = [];
   private currentTitleLength = 0;
-  private previuesTitleLength = 0;
+  private previousTitleLength = 0;
 
   private category: string | null = '';
   private company: string | null = '';
@@ -171,17 +174,16 @@ export class HomeComponent
   }
 
   filterJobs(jobFilter: IJobFilter): void {
-    this.previuesTitleLength = this.currentTitleLength;
+    this.previousTitleLength = this.currentTitleLength;
     this.currentTitleLength = jobFilter.title.length;
 
     if (
-      this.previuesTitleLength < 2 &&
-      this.currentTitleLength > this.previuesTitleLength
+      this.previousTitleLength < 2 &&
+      this.currentTitleLength > this.previousTitleLength
     ) {
       return;
     }
 
-    this.loadingService.show();
     const filter = jobFilter;
 
     if (filter.title.length < 3) {
@@ -194,13 +196,13 @@ export class HomeComponent
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((jobs) => {
         if (
-          this.previuesTitleLength == 2 &&
-          this.currentTitleLength > this.previuesTitleLength
+          this.previousTitleLength == 2 &&
+          this.currentTitleLength > this.previousTitleLength
         ) {
           this.jobs = jobs;
         } else if (
-          this.previuesTitleLength == 3 &&
-          this.currentTitleLength < this.previuesTitleLength
+          this.previousTitleLength == 3 &&
+          this.currentTitleLength < this.previousTitleLength
         ) {
           this.jobs = jobs;
         } else if (this.category || this.company) {
@@ -219,11 +221,10 @@ export class HomeComponent
         this.pageFormControl.setValue(0);
         this.calculateTotalPages();
         this.calculateVisiblePages();
-        this.loadingService.hide();
       });
   }
 
-  changePage(page: number): void {
+  onChangePage(page: number): void {
     if (page >= 0 && page < this.totalPages) {
       this.loadingService.show();
       this.pageFormControl.setValue(page);
@@ -237,6 +238,7 @@ export class HomeComponent
           this.jobs.jobs.forEach((job) => {
             job.isSaved = this.savedJobIds.includes(job.id);
           });
+          this.resetScroll();
           this.loadingService.hide();
         });
     }
@@ -286,12 +288,27 @@ export class HomeComponent
   }
 
   onSelectJob(job: IJob): void {
+    this.previousScroll = this.scrollBarContainer.nativeElement.scrollTop;
     this.selectedJob = job;
-    this.isJobDetailsShowing = true;
+    if (this.selectedJob.description == null) {
+      this.jobService
+        .getJobDescription(job.id)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((description) => {
+          this.selectedJob.description = description;
+          this.isJobDetailsShowing = true;
+          this.resetScroll();
+        });
+    }
+    else {
+      this.isJobDetailsShowing = true;
+      this.resetScroll();
+    }
   }
 
   onBack(): void {
     this.isJobDetailsShowing = false;
+    this.scrollBarContainer.nativeElement.scrollTop = this.previousScroll;
   }
 
   onSave(job: IJob): void {
@@ -317,5 +334,9 @@ export class HomeComponent
       .subscribe(() => {
         this.initializeJobs();
       });
+  }
+
+  private resetScroll() {
+    this.scrollBarContainer.nativeElement.scrollTop = 0;
   }
 }

@@ -1,23 +1,22 @@
 .job-details-container {
-  margin-top: 5%;
   font-family: Arial, sans-serif;
 
   .job-title {
     font-size: 1.5rem;
     font-weight: bold;
   }
-  
+
   .bi-arrow-left {
     font-size: 1.5rem;
     cursor: pointer;
     margin-bottom: 2%;
   }
-  
+
   .buttons {
     display: flex;
     justify-content: flex-start;
   }
-  
+
   .bi-arrow-left:hover {
     color: #007bff;
   }
@@ -90,6 +89,9 @@
 
   .summary-item {
     margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
   }
 
   .company-name {
@@ -114,4 +116,18 @@
     font-size: 0.875rem;
     display: inline-block;
   }
+}
+
+.company-info {
+  margin-top: 5%;
+  font-size: 1rem;
+}
+
+.inactive-job-warning {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3%;
 }

@@ -1,0 +1,25 @@
+<div #scrollable class="initial-container">
+  <div class="container" *ngIf="!isJobDetailsShowing">
+    <div class="jobs-container" *ngFor="let job of recommendedJobs">
+      <app-job-card
+        (onJobSelect)="onSelectJob($event)"
+        (onSaveJob)="onSave($event)"
+        (onDeleteJob)="onDelete($event)"
+        class="job-container"
+        [job]="job"
+      ></app-job-card>
+    </div>
+  </div>
+  <div class="get-job-recommendations-button" *ngIf="!isJobDetailsShowing">
+    <button (click)="onGetJobRecommendations()" class="btn btn-primary">Get Job Recommendations</button>
+  </div>
+
+  <app-job-details
+    (onSaveJob)="onSave($event)"
+    (onBack)="onBack()"
+    (onDeleteJob)="onDelete($event)"
+    [job]="this.selectedJob"
+    *ngIf="isJobDetailsShowing"
+  >
+  </app-job-details>
+</div>
