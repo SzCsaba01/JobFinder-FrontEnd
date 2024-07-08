@@ -28,7 +28,17 @@
         <mat-error
           *ngIf="feedbackFormControl.invalid && feedbackFormControl.touched"
         >
-          Feedback is required.
+          Feedback is required!
+        </mat-error>
+        <mat-error
+          *ngIf="
+            feedbackFormControl.hasError('maxlength') &&
+            feedbackFormControl.touched
+          "
+        >
+          Feedback must be at most
+          {{feedbackFormControl.errors?.['maxlength']?.['requiredLength']}}
+          characters long!
         </mat-error>
       </mat-form-field>
 

@@ -55,21 +55,24 @@ export class FeedbackComponent extends SelfUnsubscriberBase implements OnInit {
     this.feedbackService
       .getFeedbackByToken(token)
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((feedback) => {
-        this.feedback = feedback;
-        this.loadingService.hide();
-      },
-      (error: any) => {
-        this.router.navigate(['/home']);
-      });
+      .subscribe(
+        (feedback) => {
+          this.feedback = feedback;
+          this.loadingService.hide();
+        },
+        (error: any) => {
+          this.router.navigate(['/home']);
+        }
+      );
   }
 
   private initializeForm(): void {
-    (this.feedbackFormControl = new FormControl('', [Validators.required])),
+    (this.feedbackFormControl = new FormControl('', [
+      Validators.required,
+      Validators.maxLength(500),
+    ])),
       (this.applicationStatusFormControl = new FormControl('', [
         Validators.required,
-        Validators.min(0),
-        Validators.max(5),
       ])),
       (this.companyRatingFormControl = new FormControl('', [
         Validators.required,
@@ -93,15 +96,18 @@ export class FeedbackComponent extends SelfUnsubscriberBase implements OnInit {
     this.feedback.companyRating = this.companyRatingFormControl.value;
 
     console.log(this.feedback);
-    this.feedbackService.updateFeedback(this.feedback)
-    .pipe(takeUntil(this.ngUnsubscribe))  
-    .subscribe(() => {
-      this.loadingService.hide();
-      this.router.navigate(['/home']);
-    },
-    (error: any) => {
-      this.router.navigate(['/home']);
-    });
+    this.feedbackService
+      .updateFeedback(this.feedback)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        () => {
+          this.loadingService.hide();
+          this.router.navigate(['/home']);
+        },
+        (error: any) => {
+          this.router.navigate(['/home']);
+        }
+      );
   }
 
   setRating(rating: number): void {

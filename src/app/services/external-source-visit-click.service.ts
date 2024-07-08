@@ -9,23 +9,23 @@ import { IJobFilter } from '../models/job/jobFilter.model';
 @Injectable({
   providedIn: 'root',
 })
-export class JobApplicationClickService {
-  private _url = 'JobApplicationClick';
+export class ExternalSourceVisitClickService {
+  private _url = 'ExternalSourceVisitClick';
 
   constructor(private http: HttpClient) {}
 
-  public getFilteredAppliedJobs(
+  public getFilteredExternalSourceVisits(
     filteredJobsSearch: IJobFilter
   ): Observable<IJobFilterResult> {
     return this.http.post<IJobFilterResult>(
-      `${environment.jobUrl}/${this._url}/GetFilteredAppliedJobs`,
+      `${environment.jobUrl}/${this._url}/GetFilteredExternalSourceVisits`,
       filteredJobsSearch
     );
   }
 
-  public clickJobApplication(jobId: Guid): Observable<any> {
+  public clickExternalSourceVisit(jobId: Guid): Observable<any> {
     return this.http.post(
-      `${environment.jobUrl}/${this._url}/ClickJobApplication?jobId=${jobId}`,
+      `${environment.jobUrl}/${this._url}/ClickExternalSourceVisit?jobId=${jobId}`,
       {}
     );
   }

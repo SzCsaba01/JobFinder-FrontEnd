@@ -112,9 +112,9 @@ export class AddJobComponent extends SelfUnsubscriberBase implements OnInit {
   private initializeJobForm(): void {
     this.jobTitleFormControl = new FormControl('', [
       Validators.required,
-      Validators.minLength(3),
+      Validators.maxLength(100),
     ]);
-    this.jobDescriptionFormControl = new FormControl('');
+    this.jobDescriptionFormControl = new FormControl('', Validators.maxLength(10000));
     this.jobUrlFormControl = new FormControl('', [
       Validators.required,
       Validators.pattern(urlFormat),

@@ -17,7 +17,7 @@ import { angularMaterialModulesUtil } from '../../shared-modules/angular-materia
 import { formModulesUtil } from '../../shared-modules/form-modules.util';
 import { JobCardComponent } from '../job-card/job-card.component';
 import { JobDetailsComponent } from '../job-details/job-details.component';
-import { JobApplicationClickService } from '../../services/job-application-click.service';
+import { ExternalSourceVisitClickService } from '../../services/external-source-visit-click.service';
 
 @Component({
   selector: 'app-job-applications',
@@ -66,7 +66,7 @@ export class JobApplicationsComponent extends SelfUnsubscriberBase implements On
   constructor(
     private jobService: JobService,
     private savedJobService: SavedJobService,
-    private jobApplicationClickService: JobApplicationClickService,
+    private jobApplicationClickService: ExternalSourceVisitClickService,
     private countryStateCityService: CountryStateCityService,
     private loadingService: LoadingService
   ) {
@@ -82,7 +82,7 @@ export class JobApplicationsComponent extends SelfUnsubscriberBase implements On
 
   private initializeJobs(): void {
     this.jobApplicationClickService
-      .getFilteredAppliedJobs(this.jobFilter.value)
+      .getFilteredExternalSourceVisits(this.jobFilter.value)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((jobs) => {
         this.jobs = jobs;
@@ -172,7 +172,7 @@ export class JobApplicationsComponent extends SelfUnsubscriberBase implements On
 
     filter.page = 0;
     this.jobApplicationClickService
-      .getFilteredAppliedJobs(filter)
+      .getFilteredExternalSourceVisits(filter)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((jobs) => {
         if (
@@ -206,7 +206,7 @@ export class JobApplicationsComponent extends SelfUnsubscriberBase implements On
       this.pageFormControl.setValue(page);
       this.calculateVisiblePages();
       this.jobApplicationClickService
-        .getFilteredAppliedJobs(this.jobFilter.value)
+        .getFilteredExternalSourceVisits(this.jobFilter.value)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((jobs) => {
           this.jobs = jobs;

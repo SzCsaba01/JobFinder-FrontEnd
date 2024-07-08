@@ -36,7 +36,11 @@ export class SendResetPasswordEmailComponent
   }
 
   private initializeForm(): void {
-    this.email = new FormControl('', [Validators.required, Validators.email]);
+    this.email = new FormControl('', [
+      Validators.required,
+      Validators.email,
+      Validators.maxLength(50),
+    ]);
     this.emailFormGroup = new FormGroup({
       email: this.email,
     });

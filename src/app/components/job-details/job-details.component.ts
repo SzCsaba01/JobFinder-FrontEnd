@@ -3,7 +3,7 @@ import { SelfUnsubscriberBase } from '../../utils/SelfUnsubscriberBase';
 import { IJob } from '../../models/job/job.model';
 import { CountryStateCityService } from '../../services/country-state-city.service';
 import { CommonModule } from '@angular/common';
-import { JobApplicationClickService } from '../../services/job-application-click.service';
+import { ExternalSourceVisitClickService } from '../../services/external-source-visit-click.service';
 import { takeUntil } from 'rxjs';
 import { userRoles } from '../../constants/user-roles';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -26,7 +26,7 @@ export class JobDetailsComponent extends SelfUnsubscriberBase implements OnInit{
 
   constructor(
     public countryStateCityService: CountryStateCityService,
-    private jobApplicationClickService: JobApplicationClickService,
+    private jobApplicationClickService: ExternalSourceVisitClickService,
     private authenticationService: AuthenticationService,
   ) {
     super();
@@ -94,7 +94,7 @@ export class JobDetailsComponent extends SelfUnsubscriberBase implements OnInit{
 
   onApply(): void {
     this.jobApplicationClickService
-      .clickJobApplication(this.job.id)
+      .clickExternalSourceVisit(this.job.id)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe();
     window.open(this.job.url, '_blank');
