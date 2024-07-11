@@ -14,12 +14,12 @@ import { ManageUsersComponent } from './components/manage-users/manage-users.com
 import { RoleGuard } from './helpers/role.guard';
 import { LandingPageLayoutComponent } from './layouts/landing-page-layout/landing-page-layout.component';
 import { AddJobComponent } from './components/add-job/add-job.component';
-import { JobApplicationsComponent } from './components/job-applications/job-applications.component';
 import { SavedJobsComponent } from './components/saved-jobs/saved-jobs.component';
 import { FeaturedComponent } from './components/featured/featured.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { UserFeedbacksComponent } from './components/user-feedbacks/user-feedbacks.component';
 import { JobRecommendationsComponent } from './components/job-recommendations/job-recommendations.component';
+import { ExternalSourceVisitsComponent } from './components/external-source-visits/external-source-visits.component';
 
 export const routes: Routes = [
     {
@@ -58,8 +58,8 @@ export const routes: Routes = [
                 canActivate: [AuthGuard],
             },
             {
-                path: 'job-applications',
-                component: JobApplicationsComponent,
+                path: 'external-source-visits',
+                component: ExternalSourceVisitsComponent,
                 canActivate: [AuthGuard],
             },
             {

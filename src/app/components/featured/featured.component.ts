@@ -37,9 +37,9 @@ export class FeaturedComponent extends SelfUnsubscriberBase implements OnInit {
 
     const requests: Observable<any>[] = [];
 
-    requests.push(this.companyService.getMostAppliedCompaniesInLast30Days());
+    requests.push(this.companyService.getMostVisitedCompaniesInLast30Days());
     requests.push(this.companyService.getMostSavedCompaniesInLast30Days());
-    requests.push(this.categoryService.getMostAppliedCategoriesInLast30Days());
+    requests.push(this.categoryService.getMostVisitedCategoriesInLast30Days());
     requests.push(this.categoryService.getMostSavedCategoriesInLast30Days());
 
     forkJoin(requests).subscribe((response) => {

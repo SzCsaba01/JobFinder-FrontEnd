@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { SelfUnsubscriberBase } from '../../utils/SelfUnsubscriberBase';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Guid } from 'guid-typescript';
 import { takeUntil } from 'rxjs';
@@ -9,18 +8,19 @@ import { IJobFilterResult } from '../../models/job/jobFilterResult.model';
 import { ICountryStateCity } from '../../models/location/countryStateCity.model';
 import { ILocation } from '../../models/location/location.model';
 import { CountryStateCityService } from '../../services/country-state-city.service';
+import { ExternalSourceVisitClickService } from '../../services/external-source-visit-click.service';
 import { JobService } from '../../services/job.service';
 import { LoadingService } from '../../services/loading.service';
 import { SavedJobService } from '../../services/saved-job.service';
+import { SelfUnsubscriberBase } from '../../utils/SelfUnsubscriberBase';
 import { CommonModule } from '@angular/common';
 import { angularMaterialModulesUtil } from '../../shared-modules/angular-material-modules.util';
 import { formModulesUtil } from '../../shared-modules/form-modules.util';
 import { JobCardComponent } from '../job-card/job-card.component';
 import { JobDetailsComponent } from '../job-details/job-details.component';
-import { ExternalSourceVisitClickService } from '../../services/external-source-visit-click.service';
 
 @Component({
-  selector: 'app-job-applications',
+  selector: 'app-external-source-visits',
   standalone: true,
   imports: [
     CommonModule,
@@ -29,13 +29,16 @@ import { ExternalSourceVisitClickService } from '../../services/external-source-
     formModulesUtil(),
     angularMaterialModulesUtil(),
   ],
-  templateUrl: './job-applications.component.html',
-  styleUrl: './job-applications.component.scss'
+  templateUrl: './external-source-visits.component.html',
+  styleUrl: './external-source-visits.component.scss',
 })
-export class JobApplicationsComponent extends SelfUnsubscriberBase implements OnInit {
+export class ExternalSourceVisitsComponent
+  extends SelfUnsubscriberBase
+  implements OnInit
+{
   @ViewChild('scrollable') private scrollBarContainer = {} as ElementRef;
   private previousScroll = 0;
-  
+
   jobs: IJobFilterResult = {} as IJobFilterResult;
   locations: ILocation[] = [];
   locationInput: string = '';
@@ -66,7 +69,7 @@ export class JobApplicationsComponent extends SelfUnsubscriberBase implements On
   constructor(
     private jobService: JobService,
     private savedJobService: SavedJobService,
-    private jobApplicationClickService: ExternalSourceVisitClickService,
+    private externalSourceVisitClickService: ExternalSourceVisitClickService,
     private countryStateCityService: CountryStateCityService,
     private loadingService: LoadingService
   ) {
@@ -81,7 +84,7 @@ export class JobApplicationsComponent extends SelfUnsubscriberBase implements On
   }
 
   private initializeJobs(): void {
-    this.jobApplicationClickService
+    this.externalSourceVisitClickService
       .getFilteredExternalSourceVisits(this.jobFilter.value)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((jobs) => {
@@ -160,7 +163,10 @@ export class JobApplicationsComponent extends SelfUnsubscriberBase implements On
     this.previuesTitleLength = this.currentTitleLength;
     this.currentTitleLength = jobFilter.title.length;
 
-    if (this.previuesTitleLength < 2 && this.currentTitleLength > this.previuesTitleLength) {
+    if (
+      this.previuesTitleLength < 2 &&
+      this.currentTitleLength > this.previuesTitleLength
+    ) {
       return;
     }
 
@@ -171,7 +177,7 @@ export class JobApplicationsComponent extends SelfUnsubscriberBase implements On
     }
 
     filter.page = 0;
-    this.jobApplicationClickService
+    this.externalSourceVisitClickService
       .getFilteredExternalSourceVisits(filter)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((jobs) => {
@@ -205,7 +211,7 @@ export class JobApplicationsComponent extends SelfUnsubscriberBase implements On
       this.loadingService.show();
       this.pageFormControl.setValue(page);
       this.calculateVisiblePages();
-      this.jobApplicationClickService
+      this.externalSourceVisitClickService
         .getFilteredExternalSourceVisits(this.jobFilter.value)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((jobs) => {
@@ -281,7 +287,6 @@ export class JobApplicationsComponent extends SelfUnsubscriberBase implements On
     }
   }
 
-
   onBack(): void {
     this.isJobDetailsShowing = false;
     this.scrollBarContainer.nativeElement.scrollTop = this.previousScroll;
@@ -304,7 +309,8 @@ export class JobApplicationsComponent extends SelfUnsubscriberBase implements On
   }
 
   onDelete(job: IJob): void {
-    this.jobService.deleteJob(job.id)
+    this.jobService
+      .deleteJob(job.id)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
         this.initializeJobs();

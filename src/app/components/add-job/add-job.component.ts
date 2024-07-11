@@ -38,6 +38,8 @@ export class AddJobComponent extends SelfUnsubscriberBase implements OnInit {
   countryStateCity = {} as ICountryStateCity;
   locations: ILocation[] = [];
 
+  isMaxLocationsReached = false;
+
   formData: FormData = new FormData();
   companyLogoUrl: string = '';
 
@@ -112,7 +114,7 @@ export class AddJobComponent extends SelfUnsubscriberBase implements OnInit {
   private initializeJobForm(): void {
     this.jobTitleFormControl = new FormControl('', [
       Validators.required,
-      Validators.maxLength(100),
+      Validators.maxLength(200),
     ]);
     this.jobDescriptionFormControl = new FormControl('', Validators.maxLength(10000));
     this.jobUrlFormControl = new FormControl('', [
@@ -140,7 +142,7 @@ export class AddJobComponent extends SelfUnsubscriberBase implements OnInit {
   }
 
   private initializeLocationForm(): void {
-    this.countryFormControl = new FormControl('', Validators.required);
+    this.countryFormControl = new FormControl('');
     this.stateFormControl = new FormControl({ value: '', disabled: true });
     this.cityFormControl = new FormControl({ value: '', disabled: true });
 
@@ -180,11 +182,13 @@ export class AddJobComponent extends SelfUnsubscriberBase implements OnInit {
   }
 
   onUploadImage(event: any): void {
+    this.loadingService.show();
     if (event.target.files.length === 0) return;
     const file = event.target.files[0];
 
     if (file.type.split('/')[0] !== 'image') {
       this.errorHandlerService.showMessage('Only image files are allowed!', 'error');
+      this.loadingService.hide();
       return;
     }
 
@@ -195,14 +199,19 @@ export class AddJobComponent extends SelfUnsubscriberBase implements OnInit {
     };
 
     this.formData.append('CompanyLogoFile', file);
+    this.loadingService.hide();
   }
 
   onDeselectImage(): void {
-    this.jobForm.get('companyLogo')?.setValue(null);
+    this.jobForm.get('CompanyLogoFile')?.setValue(null);
     this.companyLogoUrl = '';
   }
 
   onAddLocation(): void {
+    if (this.locations.length >= 5) {
+      return;
+    }
+
     const location = {
       countryIso2Code: this.countryFormControl.value,
       stateCode: this.stateFormControl.value,
@@ -215,6 +224,10 @@ export class AddJobComponent extends SelfUnsubscriberBase implements OnInit {
     this.stateFormControl.reset();
     this.cityFormControl.reset();
     this.cityFormControl.disable();
+
+    if (this.locations.length > 4) {
+      this.isMaxLocationsReached = true;
+    }
   }
 
   onDeleteLocation(location: any): void {
@@ -222,6 +235,8 @@ export class AddJobComponent extends SelfUnsubscriberBase implements OnInit {
     if (index !== -1) {
       this.locations.splice(index, 1);
     }
+
+    this.isMaxLocationsReached = false;
   }
 
   onSubmit(): void {
@@ -263,41 +278,11 @@ export class AddJobComponent extends SelfUnsubscriberBase implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
         this.loadingService.hide();
-
-        this.jobForm.reset();
-        this.jobTitleFormControl.reset();
-        this.jobDescriptionFormControl.reset();
-        this.jobUrlFormControl.reset();
-        this.jobCategoriesFormControl.reset();
-        this.jobTagsFormControl.reset();
-        this.jobCompanyNameFormControl.reset();
-        this.jobCompanyLogoFormControl.reset();
-        this.jobContractTypeFormControl.reset();
-        this.jobIsRemoteFormControl.reset();
-
-        this.locationFormGroup.reset();
-        this.locations = [];
-        this.companyLogoUrl = '';
-        this.formData = new FormData();
+        window.location.reload();
       },
       () => {
         this.loadingService.hide();
-
-        this.jobForm.reset();
-        this.jobTitleFormControl.reset();
-        this.jobDescriptionFormControl.reset();
-        this.jobUrlFormControl.reset();
-        this.jobCategoriesFormControl.reset();
-        this.jobTagsFormControl.reset();
-        this.jobCompanyNameFormControl.reset();
-        this.jobCompanyLogoFormControl.reset();
-        this.jobContractTypeFormControl.reset();
-        this.jobIsRemoteFormControl.reset();
-
-        this.locationFormGroup.reset();
-        this.locations = [];
-        this.companyLogoUrl = '';
-        this.formData = new FormData();
+        window.location.reload();
       });
   }
 }

@@ -30,6 +30,6 @@ export class JobService {
   }
 
   public deleteJob(jobId: Guid): Observable<any> {
-    return this.http.delete<any>(`${environment.jobUrl}/${this._url}/DeleteJob/${jobId}`);
+    return this.http.delete<any>(`${environment.jobUrl}/${this._url}/DeleteJob?jobId=${jobId}`);
   }
 }

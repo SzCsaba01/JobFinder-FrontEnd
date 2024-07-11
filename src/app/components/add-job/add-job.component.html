@@ -1,6 +1,6 @@
 <div class="initial-container">
   <div class="container">
-    <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="jobForm">
       <mat-form-field>
         <input matInput formControlName="title" placeholder="Job Title*" />
         <mat-error *ngIf="jobTitleFormControl.hasError('required')"
@@ -152,14 +152,25 @@
       <div class="add-location-button">
         <button
           class="btn btn-primary"
-          [disabled]="!locationFormGroup.valid"
+          [disabled]="
+            !locationFormGroup.valid ||
+            countryFormControl.value == '' ||
+            countryFormControl.value == null ||
+            isMaxLocationsReached
+          "
           (click)="onAddLocation()"
         >
           Add Location
         </button>
       </div>
 
-      <form [formGroup]="locationFormGroup" (ngSubmit)="onAddLocation()">
+      <div *ngIf="isMaxLocationsReached">
+        <div class="max-locations-reached">
+          Maximum number of locations reached
+        </div>
+      </div>
+
+      <form [formGroup]="locationFormGroup">
         <mat-form-field>
           <mat-label>Country</mat-label>
           <mat-select formControlName="country">
@@ -222,6 +233,7 @@
         <button
           class="btn btn-primary"
           [disabled]="!jobForm.valid"
+          (click)="onSubmit()"
           type="submit"
         >
           Submit

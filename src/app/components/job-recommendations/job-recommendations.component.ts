@@ -55,7 +55,6 @@ export class JobRecommendationsComponent
       .getRecommendedJobs()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((jobs) => {
-        console.log(jobs);
         this.recommendedJobs = jobs;
 
         this.savedJobService
@@ -121,24 +120,22 @@ export class JobRecommendationsComponent
 
   onGetJobRecommendations(): void {
     this.loadingService.show();
-    this.recommendationService
-      .pollNewRecommendedJobs()
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((jobs) => {
-        console.log(jobs);
-        jobs.forEach((job) => {
-          job.isSaved = this.savedJobIds.includes(job.id);
-        });
-        this.recommendedJobs.unshift(...jobs);
-        console.log(this.recommendedJobs);
-
-        this.loadingService.hide();
-      });
-
     this.userProfileService
       .recommendJobs()
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe();
+      .subscribe(() => {
+        this.recommendationService
+        .pollNewRecommendedJobs()
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((jobs) => {
+          jobs.forEach((job) => {
+            job.isSaved = this.savedJobIds.includes(job.id);
+          });
+          this.recommendedJobs.unshift(...jobs);
+  
+          this.loadingService.hide();
+        });
+      });
   }
 
   private resetScroll() {

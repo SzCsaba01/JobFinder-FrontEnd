@@ -26,7 +26,7 @@ export class JobDetailsComponent extends SelfUnsubscriberBase implements OnInit{
 
   constructor(
     public countryStateCityService: CountryStateCityService,
-    private jobApplicationClickService: ExternalSourceVisitClickService,
+    private externalSourceVisitClickService: ExternalSourceVisitClickService,
     private authenticationService: AuthenticationService,
   ) {
     super();
@@ -93,7 +93,7 @@ export class JobDetailsComponent extends SelfUnsubscriberBase implements OnInit{
   }
 
   onApply(): void {
-    this.jobApplicationClickService
+    this.externalSourceVisitClickService
       .clickExternalSourceVisit(this.job.id)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe();

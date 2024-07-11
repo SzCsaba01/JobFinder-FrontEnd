@@ -18,9 +18,9 @@ export class CategoryService {
     );
   }
 
-  public getMostAppliedCategoriesInLast30Days(): Observable<ICompany[]> {
+  public getMostVisitedCategoriesInLast30Days(): Observable<ICompany[]> {
     return this.http.get<ICompany[]>(
-      `${environment.jobUrl}/${this._url}/GetMostAppliedCategoriesInLast30Days`
+      `${environment.jobUrl}/${this._url}/GetMostVisitedCategoriesInLast30Days`
     );
   }
 

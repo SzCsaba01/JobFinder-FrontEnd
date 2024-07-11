@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="featured-section">
-      <h4 class="section-title">Most Applied Companies</h4>
+      <h4 class="section-title">Most Visited Companies</h4>
       <div class="row">
         <div
           class="col-12 col-md-2"
@@ -44,7 +44,7 @@
                 {{ company.rating.toFixed(1) }} ({{ company.numberOfRatings }})
               </span>
               <span class="company-info badge">
-                {{ company.count }} Applied
+                {{ company.count }} Visited
               </span>
             </div>
           </mat-card>
@@ -71,7 +71,7 @@
       </div>
     </div>
     <div class="featured-section">
-      <h4 class="section-title">Most Applied Categories</h4>
+      <h4 class="section-title">Most Visited Categories</h4>
       <div class="row">
         <div
           class="col-12 col-md-2"
@@ -80,7 +80,7 @@
           <mat-card class="category-card" (click)="onCategoryClick(category)">
             <div class="card-body">
               <span class="category-name">{{ category.name }}</span>
-              <span class="badge">{{ category.count }} Applied</span>
+              <span class="badge">{{ category.count }} Visited</span>
             </div>
           </mat-card>
         </div>

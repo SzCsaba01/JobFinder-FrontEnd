@@ -99,8 +99,9 @@ export class UserProfileComponent
   }
 
   private getFileNameFromPath(filePath: string): string {
-    return filePath.split('\\').pop() || '';
-  }
+    const normalizedPath = filePath.replace(/\\/g, '/'); 
+    return normalizedPath.split('/').pop() || '';
+}
 
   private initializeCountryStateCity(): void {
     this.countryStateCity.country = this.countryStateCityService.getCountries();
@@ -209,6 +210,7 @@ export class UserProfileComponent
         'Only PDF files are allowed!',
         'error'
       );
+      this.loadingService.hide();
       return;
     }
 

@@ -7,6 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { formModulesUtil } from '../../shared-modules/form-modules.util';
 import { CommonModule } from '@angular/common';
 import { angularMaterialModulesUtil } from '../../shared-modules/angular-material-modules.util';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-send-reset-password-email',
@@ -27,7 +28,11 @@ export class SendResetPasswordEmailComponent
   emailFormGroup: FormGroup = {} as FormGroup;
   email = {} as FormControl;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(
+    private userService: UserService,
+    private loadingService: LoadingService,
+    private router: Router
+  ) {
     super();
   }
 
@@ -47,10 +52,13 @@ export class SendResetPasswordEmailComponent
   }
 
   sendResetPasswordEmail(email: string): void {
+    this.loadingService.show();
+    console.log('test');
     this.userService
       .sendResetPasswordEmail(email)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
+        this.loadingService.hide();
         this.router.navigate(['/login']);
       });
   }

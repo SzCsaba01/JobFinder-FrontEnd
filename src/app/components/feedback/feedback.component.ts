@@ -95,7 +95,6 @@ export class FeedbackComponent extends SelfUnsubscriberBase implements OnInit {
     this.feedback.applicationStatus = this.applicationStatusFormControl.value;
     this.feedback.companyRating = this.companyRatingFormControl.value;
 
-    console.log(this.feedback);
     this.feedbackService
       .updateFeedback(this.feedback)
       .pipe(takeUntil(this.ngUnsubscribe))

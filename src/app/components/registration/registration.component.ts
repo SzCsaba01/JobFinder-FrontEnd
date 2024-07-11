@@ -113,6 +113,7 @@ export class RegistrationComponent
         'Only PDF files are allowed!',
         'error'
       );
+      this.loadingService.hide();
       return;
     }
 

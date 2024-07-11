@@ -18,9 +18,9 @@ export class CompanyService {
     );
   }
 
-  public getMostAppliedCompaniesInLast30Days(): Observable<ICompany[]> {
+  public getMostVisitedCompaniesInLast30Days(): Observable<ICompany[]> {
     return this.http.get<ICompany[]>(
-      `${environment.jobUrl}/${this._url}/GetMostAppliedCompaniesInLast30Days`
+      `${environment.jobUrl}/${this._url}/GetMostVisitedCompaniesInLast30Days`
     );
   }
 
