@@ -34,7 +34,6 @@ export class ChangePasswordComponent extends SelfUnsubscriberBase implements OnI
   }
 
   ngOnInit(): void {
-    console.log('test');
     this.initializeForm();
     this.userService.verifyIfResetPasswordTokenExists(this.token)
       .pipe(takeUntil(this.ngUnsubscribe))

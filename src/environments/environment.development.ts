@@ -1,5 +1,5 @@
 export const environment = {
-    jobFinderUrl: 'http://localhost:5278/api',
-    jobUrl : 'http://localhost:5130/api',
-    locationUrl : 'http://localhost:5204/api',
+    userUrl: 'https://localhost:5278/api',
+    jobUrl : 'https://localhost:5130/api',
+    locationUrl : 'https://localhost:5204/api',
 };

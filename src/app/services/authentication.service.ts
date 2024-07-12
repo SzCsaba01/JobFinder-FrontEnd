@@ -21,7 +21,7 @@ export class AuthenticationService {
 
   public login(userAuthentication: AuthenticationRequest){
     return this.http
-      .post<string>(`${environment.jobFinderUrl}/${this._url}/Login`, userAuthentication, this.options)
+      .post<string>(`${environment.userUrl}/${this._url}/Login`, userAuthentication, this.options)
       .pipe(
         map((role : string) => {
           localStorage.setItem('role', role);
@@ -34,7 +34,7 @@ export class AuthenticationService {
     localStorage.removeItem('role');
     this.route.navigate(['']);
 
-    return this.http.post<any>(`${environment.jobFinderUrl}/${this._url}/Logout`, {});
+    return this.http.post<any>(`${environment.userUrl}/${this._url}/Logout`, {});
   }
 
   public isAuthenticated(){

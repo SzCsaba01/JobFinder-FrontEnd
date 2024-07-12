@@ -85,12 +85,12 @@ export class RegistrationComponent
     this.firstName = new FormControl('', [
       Validators.required,
       Validators.minLength(2),
-      Validators.maxLength(50),
+      Validators.maxLength(100),
     ]);
     this.lastName = new FormControl('', [
       Validators.required,
       Validators.minLength(2),
-      Validators.maxLength(50),
+      Validators.maxLength(100),
     ]);
 
     this.registrationForm = this.formBuilder.group({

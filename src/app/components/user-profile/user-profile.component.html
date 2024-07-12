@@ -67,7 +67,7 @@
           <mat-form-field appearance="fill" class="form-field">
             <mat-label>Country</mat-label>
             <mat-select formControlName="country">
-              <mat-option *ngIf="country.value != ''" [value]=""
+              <mat-option *ngIf="country.value != '' && country.value != null" [value]=""
                 >Clear Filter</mat-option
               >
               <mat-option

@@ -53,7 +53,6 @@ export class SendResetPasswordEmailComponent
 
   sendResetPasswordEmail(email: string): void {
     this.loadingService.show();
-    console.log('test');
     this.userService
       .sendResetPasswordEmail(email)
       .pipe(takeUntil(this.ngUnsubscribe))

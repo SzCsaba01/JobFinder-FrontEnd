@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class SkillService {
 
   public getAllSkills(): Observable<string[]> {
     return this.http.get<string[]>(
-      `${environment.jobFinderUrl}/${this._url}/GetAllSkills`
+      `${environment.userUrl}/${this._url}/GetAllSkills`
     );
   }
 }

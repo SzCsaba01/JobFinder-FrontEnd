@@ -137,23 +137,23 @@ export class UserProfileComponent
     this.firstName = new FormControl('', [
       Validators.required,
       Validators.minLength(2),
-      Validators.maxLength(50),
+      Validators.maxLength(100),
     ]);
     this.lastName = new FormControl('', [
       Validators.required,
       Validators.minLength(2),
-      Validators.maxLength(50),
+      Validators.maxLength(100),
     ]);
     this.country = new FormControl('');
     this.state = new FormControl({ value: '', disabled: true });
     this.city = new FormControl({ value: '', disabled: true });
     this.education = new FormControl('', [
       Validators.minLength(2),
-      Validators.maxLength(500),
+      Validators.maxLength(1000),
     ]);
     this.experience = new FormControl('', [
       Validators.minLength(2),
-      Validators.maxLength(500),
+      Validators.maxLength(1000),
     ]);
     this.skills = new FormControl('');
     this.updateDataFromCV = new FormControl(false);
@@ -272,7 +272,8 @@ export class UserProfileComponent
       this.city.value === this.userProfile.city &&
       this.education.value === this.userProfile.education &&
       this.experience.value === this.userProfile.experience &&
-      this.initialFileName === this.fileName
+      this.initialFileName === this.fileName &&
+      this.updateDataFromCV.value === false
     ) {
       return false;
     }

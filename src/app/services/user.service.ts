@@ -19,7 +19,7 @@ export class UserService {
     resetPasswordToken: string
   ): Observable<boolean> {
     return this.http.get<boolean>(
-      `${environment.jobFinderUrl}/${this._url}/VerifyIfResetPasswordTokenExists?resetPasswordToken=${resetPasswordToken}`
+      `${environment.userUrl}/${this._url}/VerifyIfResetPasswordTokenExists?resetPasswordToken=${resetPasswordToken}`
     );
   }
 
@@ -27,21 +27,21 @@ export class UserService {
     filteredUsersSearch: IFilteredUserSearch
   ): Observable<IFilteredUsersPagination> {
     return this.http.put<IFilteredUsersPagination>(
-      `${environment.jobFinderUrl}/${this._url}/GetFilteredUsersPaginated`,
+      `${environment.userUrl}/${this._url}/GetFilteredUsersPaginated`,
       filteredUsersSearch
     );
   }
 
   public changePassword(userChangePassword: UserChangePassword) {
     return this.http.put(
-      `${environment.jobFinderUrl}/${this._url}/ChangePassword`,
+      `${environment.userUrl}/${this._url}/ChangePassword`,
       userChangePassword
     );
   }
 
   public sendResetPasswordEmail(email: string) {
     return this.http.put(
-      `${environment.jobFinderUrl}/${this._url}/SendResetPasswordEmail?email=${email}`,
+      `${environment.userUrl}/${this._url}/SendResetPasswordEmail?email=${email}`,
       {}
     );
   }
@@ -49,21 +49,21 @@ export class UserService {
   public verifyEmailByRegistrationToken(registrationToken: string) {
     const encodedToken = encodeURIComponent(registrationToken);
     return this.http.put(
-      `${environment.jobFinderUrl}/${this._url}/VerifyEmailByRegistrationToken?registrationToken=${encodedToken}`,
+      `${environment.userUrl}/${this._url}/VerifyEmailByRegistrationToken?registrationToken=${encodedToken}`,
       {}
     );
   }
 
   public register(user: FormData) {
     return this.http.post(
-      `${environment.jobFinderUrl}/${this._url}/Register`,
+      `${environment.userUrl}/${this._url}/Register`,
       user
     );
   }
 
   public deleteUser(username: string) {
     return this.http.delete(
-      `${environment.jobFinderUrl}/${this._url}/DeleteUser?username=${username}`
+      `${environment.userUrl}/${this._url}/DeleteUser?username=${username}`
     );
   }
 }

@@ -14,14 +14,14 @@ export class UserProfileService {
   constructor(private http: HttpClient) { }
 
   public getUserProfile() : Observable<IUserProfile> {
-    return this.http.get<IUserProfile>(`${environment.jobFinderUrl}/${this._url}/GetUserProfile`);
+    return this.http.get<IUserProfile>(`${environment.userUrl}/${this._url}/GetUserProfile`);
   }
 
   public editUserProfile(userProfile: FormData, updateDataFromCV: boolean) {
-    return this.http.put(`${environment.jobFinderUrl}/${this._url}/EditUserProfile?updateDataFromCV=${updateDataFromCV}`, userProfile);
+    return this.http.put(`${environment.userUrl}/${this._url}/EditUserProfile?updateDataFromCV=${updateDataFromCV}`, userProfile);
   }
 
   public recommendJobs() {
-    return this.http.post(`${environment.jobFinderUrl}/${this._url}/RecommendJobs`, null);
+    return this.http.post(`${environment.userUrl}/${this._url}/RecommendJobs`, null);
   }
 }
